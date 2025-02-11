@@ -10,7 +10,7 @@
     "dev": "vite-node server/dev.ts",
     "start": "node dist/server/index.js",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/"
+    "lint": "eslint src/ --fix"
   },
   "dependencies": {
     "@repo/logger": "workspace:*",
