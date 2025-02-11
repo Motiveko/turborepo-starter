@@ -1,0 +1,93 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Setup Pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Application
+        run: pnpm run build
+
+      - name: Create .env file
+        run: |
+          cd apps/api
+          echo "TYPEORM_CONNECTION=${{ secrets.TYPEORM_CONNECTION }}" >> .env
+          echo "TYPEORM_HOST=${{ secrets.TYPEORM_HOST }}" >> .env
+          echo "TYPEORM_USERNAME=${{ secrets.TYPEORM_USERNAME }}" >> .env
+          echo "TYPEORM_PASSWORD=${{ secrets.TYPEORM_PASSWORD }}" >> .env
+          echo "TYPEORM_DATABASE=${{ secrets.TYPEORM_DATABASE }}" >> .env
+          echo "TYPEORM_SCHEMA=${{ secrets.TYPEORM_SCHEMA }}" >> .env
+          echo "TYPEORM_PORT=${{ secrets.TYPEORM_PORT }}" >> .env
+          echo "TYPEORM_SYNCHRONIZE=${{ secrets.TYPEORM_SYNCHRONIZE }}" >> .env
+          echo "TYPEORM_LOGGING=${{ secrets.TYPEORM_LOGGING }}" >> .env
+          echo "TYPEORM_ENTITIES=${{ secrets.TYPEORM_ENTITIES }}" >> .env
+
+      # - name: Deploy scripts to Ubuntu server
+      #   uses: appleboy/scp-action@v0.1.5
+      #   with:
+      #     host: ${{ vars.SERVER_HOST }}
+      #     username: ${{ vars.SERVER_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     strip_components: 1
+      #     source: ./scripts/**
+      #     target: /home/motiveko/apps/todotodo/scripts/
+
+      # - name: Deploy web to Ubuntu server
+      #   uses: appleboy/scp-action@v0.1.5
+      #   with:
+      #     host: ${{ vars.SERVER_HOST }}
+      #     username: ${{ vars.SERVER_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     strip_components: 3
+      #     source: ./apps/web/dist/**
+      #     target: /home/motiveko/apps/todotodo/web/
+
+      # - name: Deploy api to Ubuntu server
+      #   uses: appleboy/scp-action@v0.1.5
+      #   with:
+      #     host: ${{ vars.SERVER_HOST }}
+      #     username: ${{ vars.SERVER_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     strip_components: 3
+      #     source: ./apps/api/dist/**
+      #     target: /home/motiveko/apps/todotodo/api/
+
+      # - name: Deploy api .env to Ubuntu server
+      #   uses: appleboy/scp-action@v0.1.5
+      #   with:
+      #     host: ${{ vars.SERVER_HOST }}
+      #     username: ${{ vars.SERVER_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     strip_components: 3
+      #     source: ./apps/api/.env
+      #     target: /home/motiveko/apps/todotodo/api/
+
+      # - name: Restart services
+      #   uses: appleboy/ssh-action@v0.1.8
+      #   with:
+      #     host: ${{ vars.SERVER_HOST }}
+      #     username: ${{ vars.SERVER_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd ~/apps/todotodo/scripts
+      #       chmod +x deploy.sh
+      #       ./deploy.sh

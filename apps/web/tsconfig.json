@@ -1,0 +1,13 @@
+{
+  "exclude": ["node_modules"],
+  "extends": "@repo/typescript-config/vite.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@web/*": ["src/*"]
+    }
+  },
+  "include": ["server", "src", "vite.config.mts", "tsup.config.ts"]
+}
