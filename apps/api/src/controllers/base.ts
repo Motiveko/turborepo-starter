@@ -1,22 +1,40 @@
-import type { RequestHandler } from "express";
+import type { RequestHandler, Request, Response, NextFunction } from "express";
 import packageJson from "../../package.json";
+import { ValidateBody } from "decorators/request-validator";
+import { CreateBaseDto } from "@api/dtos/base";
+import type {
+  TypedNextFunction,
+  TypedRequest,
+  TypedResponse,
+} from "@api/types/express";
 
-const getStatus: RequestHandler = (req, res) => {
-  res.json({ message: "ok" });
+type CreateResponse = {
+  message: string;
+  body: CreateBaseDto;
 };
 
-const getVersion: RequestHandler = (req, res) => {
-  res.json({ version: packageJson.version });
+type VersionResponse = {
+  version: string;
 };
 
-interface BaseController {
-  getStatus: RequestHandler;
-  getVersion: RequestHandler;
+class BaseController {
+  @ValidateBody(CreateBaseDto)
+  async create(
+    req: TypedRequest<CreateBaseDto>,
+    res: TypedResponse<CreateResponse>,
+    next: TypedNextFunction
+  ) {
+    res.json({ message: "ok", body: req.body });
+  }
+
+  async getStatus(req: TypedRequest, res: TypedResponse) {
+    res.send({ message: "ok" });
+  }
+
+  async getVersion(req: TypedRequest, res: TypedResponse<VersionResponse>) {
+    res.json({ version: packageJson.version });
+  }
 }
 
-const baseController: BaseController = {
-  getStatus,
-  getVersion,
-};
-
+const baseController = new BaseController();
 export default baseController;

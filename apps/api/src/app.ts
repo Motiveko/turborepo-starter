@@ -32,8 +32,9 @@ class App {
       .use(cors());
 
     const apiRouter = Router();
-    apiRouter.get("/status", baseController.getStatus);
-    apiRouter.get("/version", baseController.getVersion);
+    apiRouter.get("/v1/base/status", baseController.getStatus);
+    apiRouter.get("/v1/base/version", baseController.getVersion);
+    apiRouter.post("/v1/base/create", baseController.create);
 
     this.express.use("/api", apiRouter);
   }
