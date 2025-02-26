@@ -39,7 +39,8 @@ class App {
   }
 
   async initDatasource() {
-    await this.dataSource.initialize();
+    // TODO : 서비스에서는 주석해제 후 사용
+    // await this.dataSource.initialize();
   }
 
   run() {
