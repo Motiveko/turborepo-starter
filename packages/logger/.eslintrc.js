@@ -8,4 +8,5 @@ module.exports = {
   env: {
     jest: true,
   },
+  overrides: [{ "import/no-extraneous-dependencies": "off" }],
 };

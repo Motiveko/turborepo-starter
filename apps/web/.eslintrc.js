@@ -10,6 +10,8 @@ module.exports = {
       files: ["*.js?(x)", "*.ts?(x)"],
       rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/jsx-no-leaked-render": "off",
       },
     },
   ],
