@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import type { DataSource } from "typeorm";
 import { log } from "@repo/logger";
-import baseController from "@api/controller/base";
+import baseController from "@api/controllers/base";
 
 interface AppOptions {
   dataSource: DataSource;
