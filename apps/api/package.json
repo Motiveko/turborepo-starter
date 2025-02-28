@@ -9,7 +9,8 @@
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ --fix",
-    "test": "NODE_ENV=test jest --detectOpenHandles"
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "test:watch": "NODE_ENV=test jest --detectOpenHandles --watch"
   },
   "jest": {
     "preset": "@repo/jest-presets/node"
