@@ -1,6 +1,6 @@
 import type { RequestHandler, Request, Response, NextFunction } from "express";
 import packageJson from "../../package.json";
-import { ValidateBody } from "decorators/request-validator";
+import { ValidateBody } from "@api/decorators/request-validator";
 import { CreateBaseDto } from "@api/dtos/base";
 import type {
   TypedNextFunction,
