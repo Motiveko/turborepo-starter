@@ -12,3 +12,7 @@ export interface TypedRequest<T = unknown> extends Request {
 export interface TypedResponse<T = DefaultResponse> extends Response<T> {}
 
 export interface TypedNextFunction extends NextFunction {}
+
+export interface DataAndMessageResponse<T> extends MessageResponse {
+  data: T;
+}
