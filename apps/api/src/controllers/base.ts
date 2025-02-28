@@ -1,16 +1,17 @@
 import type { RequestHandler, Request, Response, NextFunction } from "express";
 import packageJson from "../../package.json";
 import { ValidateBody } from "@api/decorators/request-validator";
-import { CreateBaseDto } from "@api/dtos/base";
+import { BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
 import type {
   TypedNextFunction,
   TypedRequest,
   TypedResponse,
 } from "@api/types/express";
+import baseService from "@api/services/base";
 
 type CreateResponse = {
   message: string;
-  body: CreateBaseDto;
+  body: BaseResponseDto;
 };
 
 type VersionResponse = {
@@ -18,13 +19,19 @@ type VersionResponse = {
 };
 
 class BaseController {
+  async list(req: TypedRequest, res: TypedResponse<BaseResponseDto[]>) {
+    const list = await baseService.list();
+    res.json(list);
+  }
+
   @ValidateBody(CreateBaseDto)
   async create(
     req: TypedRequest<CreateBaseDto>,
     res: TypedResponse<CreateResponse>,
     next: TypedNextFunction
   ) {
-    res.json({ message: "ok", body: req.body });
+    const result = await baseService.create(req.body);
+    res.json({ message: "ok", body: result });
   }
 
   async getStatus(req: TypedRequest, res: TypedResponse) {

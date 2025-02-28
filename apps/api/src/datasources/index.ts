@@ -1,20 +1,27 @@
 import { DataSource } from "typeorm";
 import * as _ from "lodash";
-import * as dotenv from "dotenv";
+import { BaseEntity } from "@api/entities/base";
+import { Config } from "@api/config/env";
+let datasource: DataSource;
+export const getDatasource = () => {
+  if (!datasource) {
+    console.log(`Config.TYPEORM_USERNAME: ${Config.TYPEORM_USERNAME}`);
+    datasource = new DataSource({
+      name: "default",
+      type: "postgres",
+      username: Config.TYPEORM_USERNAME,
+      password: Config.TYPEORM_PASSWORD,
+      host: Config.TYPEORM_HOST,
+      database: Config.TYPEORM_DATABASE,
+      schema: Config.TYPEORM_SCHEMA,
+      port: _.toNumber(Config.TYPEORM_PORT),
+      // entities: ["dist/entities/*.js"],
+      entities: [BaseEntity],
+      migrations: ["dist/migrations/**/*.js"],
+      logging: ["error"],
+      synchronize: Boolean(Config.TYPEORM_SYNCHRONIZE),
+    });
+  }
 
-dotenv.config();
-
-export const defaultDataSource = new DataSource({
-  name: "default",
-  type: "postgres",
-  username: process.env.TYPEORM_USERNAME,
-  password: process.env.TYPEORM_PASSWORD,
-  host: process.env.TYPEORM_HOST,
-  database: process.env.TYPEORM_DATABASE,
-  schema: process.env.TYPEORM_SCHEMA,
-  port: _.toNumber(process.env.TYPEORM_PORT),
-  entities: ["dist/entities/*.js"],
-  migrations: ["dist/migrations/**/*.js"],
-  logging: process.env.TYPEORM_LOGGING === "1",
-  synchronize: false,
-});
+  return datasource;
+};

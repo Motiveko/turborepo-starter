@@ -39,8 +39,8 @@ class App {
     const apiRouter = Router();
     apiRouter.get("/v1/base/status", baseController.getStatus);
     apiRouter.get("/v1/base/version", baseController.getVersion);
-    apiRouter.get("/v1/base/list", baseController.getAll);
-    apiRouter.post("/v1/base/create", baseController.create);
+    apiRouter.get("/v1/base/list", baseController.list);
+    apiRouter.post("/v1/base", baseController.create);
 
     this.express.use("/api", apiRouter);
   }
