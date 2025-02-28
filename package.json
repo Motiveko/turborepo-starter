@@ -12,6 +12,7 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
+    "@swc/core": "^1.11.4",
     "prettier": "^3.2.5",
     "turbo": "^2.3.3"
   },
