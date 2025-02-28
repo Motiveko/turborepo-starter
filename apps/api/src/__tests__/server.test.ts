@@ -1,23 +1,21 @@
-// import supertest from "supertest";
-// import { describe, it, expect } from "@jest/globals";
-// import { createServer } from "../server";
+import supertest from "supertest";
+import { describe, it, expect, beforeAll } from "@jest/globals";
+import App from "@api/app";
+import { getDatasource } from "@api/datasources";
 
-// describe("Server", () => {
-//   it("health check returns 200", async () => {
-//     await supertest(createServer())
-//       .get("/status")
-//       .expect(200)
-//       .then((res) => {
-//         expect(res.ok).toBe(true);
-//       });
-//   });
+describe("Server", () => {
+  let app: App;
+  beforeAll(async () => {
+    app = new App({ dataSource: getDatasource(), port: 3000 });
+    await app.initDatasource().then(() => app.mountRouter());
+  });
 
-//   it("message endpoint says hello", async () => {
-//     await supertest(createServer())
-//       .get("/message/jared")
-//       .expect(200)
-//       .then((res) => {
-//         expect(res.body).toEqual({ message: "hello jared" });
-//       });
-//   });
-// });
+  it("status api", async () => {
+    await supertest(app.getExpress())
+      .get("/api/v1/base/status")
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual({ message: "ok" });
+      });
+  });
+});

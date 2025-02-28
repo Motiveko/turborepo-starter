@@ -22,6 +22,10 @@ class App {
     this.port = options.port;
   }
 
+  getExpress() {
+    return this.express;
+  }
+
   mountRouter() {
     // base router
     this.express
@@ -34,6 +38,7 @@ class App {
     const apiRouter = Router();
     apiRouter.get("/v1/base/status", baseController.getStatus);
     apiRouter.get("/v1/base/version", baseController.getVersion);
+    apiRouter.get("/v1/base/create", baseController.getAll);
     apiRouter.post("/v1/base/create", baseController.create);
 
     this.express.use("/api", apiRouter);
@@ -41,7 +46,7 @@ class App {
 
   async initDatasource() {
     // TODO : 서비스에서는 주석해제 후 사용
-    // await this.dataSource.initialize();
+    await this.dataSource.initialize();
   }
 
   run() {
