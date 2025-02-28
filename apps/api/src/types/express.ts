@@ -6,6 +6,10 @@ interface MessageResponse {
 
 type DefaultResponse = MessageResponse;
 
+export interface RequestWithParams<T extends Record<string, any>>
+  extends Request {
+  params: T;
+}
 export interface TypedRequest<T = unknown> extends Request {
   body: T;
 }

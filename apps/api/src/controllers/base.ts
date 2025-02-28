@@ -1,9 +1,13 @@
 import type { RequestHandler, Request, Response, NextFunction } from "express";
 import packageJson from "../../package.json";
-import { ValidateBody } from "@api/decorators/request-validator";
-import { BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
+import {
+  ValidateBody,
+  ValidateParams,
+} from "@api/decorators/request-validator";
+import { BaseIdDto, BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
 import type {
   DataAndMessageResponse,
+  RequestWithParams,
   TypedNextFunction,
   TypedRequest,
   TypedResponse,
@@ -21,6 +25,20 @@ class BaseController {
   ) {
     const data = await baseService.list();
     res.json({ message: "ok", data });
+  }
+
+  @ValidateParams(BaseIdDto)
+  async get(
+    req: RequestWithParams<BaseIdDto>,
+    res: TypedResponse<DataAndMessageResponse<BaseResponseDto | null>>
+  ) {
+    const id = req.params.id;
+    const data = await baseService.getById(id);
+    if (data) {
+      res.json({ message: "ok", data });
+    } else {
+      res.status(404).send();
+    }
   }
 
   @ValidateBody(CreateBaseDto)
