@@ -8,6 +8,7 @@ import {
   BaseResponseDto,
   CreateBaseDto,
   PatchBaseDto,
+  PutBaseDto,
 } from "@api/dtos/base";
 import type {
   DataAndMessageResponse,
@@ -64,6 +65,15 @@ class BaseController {
     res.json({ message: "ok", data });
   }
 
+  @ValidateBody(PutBaseDto)
+  @ValidateParams(BaseIdDto)
+  async put(
+    req: TypedRequest<PutBaseDto, BaseIdDto>,
+    res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>
+  ) {
+    const data = await baseService.put(req.params.id, req.body);
+    res.json({ message: "ok", data });
+  }
   async getStatus(req: TypedRequest, res: TypedResponse) {
     res.send({ message: "ok" });
   }

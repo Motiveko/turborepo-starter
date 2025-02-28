@@ -54,6 +54,8 @@ export class CreateBaseDto {
   }
 }
 
+export class PutBaseDto extends CreateBaseDto {}
+
 export class BaseResponseDto {
   @Expose()
   id: number;

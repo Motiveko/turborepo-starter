@@ -36,6 +36,7 @@ class App {
     apiRouter.get("/v1/base/:id", baseController.get);
     apiRouter.post("/v1/base", baseController.create);
     apiRouter.patch("/v1/base/:id", baseController.patch);
+    apiRouter.put("/v1/base/:id", baseController.put);
 
     // base router
     this.express

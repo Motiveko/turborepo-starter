@@ -76,11 +76,46 @@ describe("Server", () => {
     const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
       .body.data[0];
     await supertest(app.getExpress())
-      .patch(`/api/v1/base/${base.id}`)
+      .put(`/api/v1/base/${base.id}`)
       .send({ name: patchedName })
       .expect(200)
       .then((res) => {
         expect(res.body.data.name).toEqual(patchedName);
+      });
+  });
+
+  it("base put - 404", async () => {
+    await supertest(app.getExpress()).patch(`/api/v1/base/109284`).expect(404);
+  });
+
+  it("base put - 400", async () => {
+    const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
+      .body.data[0];
+    await supertest(app.getExpress())
+      .put(`/api/v1/base/${base.id}`)
+      .send({ name: "abc" })
+      .expect(400);
+  });
+
+  it.only("base put - 200", async () => {
+    const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
+      .body.data[1];
+
+    const newBase = {
+      name: "abc",
+      email: "test@test.net",
+      password: "123123123",
+    };
+
+    await supertest(app.getExpress())
+      .put(`/api/v1/base/${base.id}`)
+      .send(newBase)
+      .expect(200)
+      .then((res) => {
+        const { name, email, password } = res.body.data;
+        expect(name).toEqual(newBase.name);
+        expect(email).toEqual(newBase.email);
+        expect(password).toBe(undefined);
       });
   });
 });
