@@ -1,9 +1,11 @@
+import "@api/config/env";
 import { log } from "@repo/logger";
 import App from "@api/app";
-import { defaultDataSource } from "@api/datasources";
+import { getDatasource } from "@api/datasources";
+import { Config } from "@api/config/env";
 
-const port = Number(process.env.PORT || 5001);
-const app = new App({ dataSource: defaultDataSource, port });
+const port = Number(Config.PORT || 5001);
+const app = new App({ dataSource: getDatasource(), port });
 
 process.on("uncaughtException", (err) => {
   log(`unhandled exception (kill) message: ${err.message}`);
