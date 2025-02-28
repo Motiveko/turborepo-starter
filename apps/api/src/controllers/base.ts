@@ -1,4 +1,3 @@
-import type { RequestHandler, Request, Response, NextFunction } from "express";
 import packageJson from "../../package.json";
 import {
   ValidateBody,
@@ -42,11 +41,7 @@ class BaseController {
   ) {
     const id = req.params.id;
     const data = await baseService.getById(id);
-    if (data) {
-      res.json({ message: "ok", data });
-    } else {
-      res.status(404).send();
-    }
+    res.json({ message: "ok", data });
   }
 
   @ValidateBody(CreateBaseDto)

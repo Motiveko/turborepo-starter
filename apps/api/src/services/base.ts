@@ -13,7 +13,7 @@ class BaseService {
   async getById(id: number) {
     const entity = await baseRepository.findOne({ where: { id } });
     if (!entity) {
-      return null;
+      throw new NotFoundError(`base not found for id: ${id}`);
     }
     return BaseResponseDto.fromEntity(entity);
   }
