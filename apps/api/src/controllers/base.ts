@@ -7,6 +7,7 @@ import {
 import { BaseIdDto, BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
 import type {
   DataAndMessageResponse,
+  RequestWithBody,
   RequestWithParams,
   TypedNextFunction,
   TypedRequest,
@@ -43,7 +44,7 @@ class BaseController {
 
   @ValidateBody(CreateBaseDto)
   async create(
-    req: TypedRequest<CreateBaseDto>,
+    req: RequestWithBody<CreateBaseDto>,
     res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>,
     next: TypedNextFunction
   ) {

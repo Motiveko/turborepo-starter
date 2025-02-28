@@ -6,13 +6,19 @@ interface MessageResponse {
 
 type DefaultResponse = MessageResponse;
 
-export interface RequestWithParams<T extends Record<string, any>>
+export interface TypedRequest<T = unknown, V extends Record<string, any> = any>
   extends Request {
-  params: T;
-}
-export interface TypedRequest<T = unknown> extends Request {
   body: T;
+  params: V;
 }
+
+export type RequestWithBody<T> = TypedRequest<T>;
+
+export type RequestWithParams<T extends Record<string, any>> = TypedRequest<
+  unknown,
+  T
+>;
+
 export interface TypedResponse<T = DefaultResponse> extends Response<T> {}
 
 export interface TypedNextFunction extends NextFunction {}
