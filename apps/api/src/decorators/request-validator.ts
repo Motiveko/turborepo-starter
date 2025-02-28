@@ -25,6 +25,7 @@ export function ValidateBody<T extends object>(dtoClass: new () => T) {
           .join(", ");
         return res.status(400).json({ message: messages });
       }
+      req.body = dtoObject;
       // 검증 통과 시 원래 핸들러 실행
       return originalMethod.apply(this, [req, res, next]);
     };
