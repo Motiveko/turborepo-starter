@@ -15,6 +15,7 @@ class App {
   private express: Express;
   private dataSource: DataSource;
   private port: number;
+  private server: ReturnType<Express["listen"]> | null = null;
 
   constructor(options: AppOptions) {
     this.express = express();
@@ -38,21 +39,32 @@ class App {
     const apiRouter = Router();
     apiRouter.get("/v1/base/status", baseController.getStatus);
     apiRouter.get("/v1/base/version", baseController.getVersion);
-    apiRouter.get("/v1/base/create", baseController.getAll);
+    apiRouter.get("/v1/base/list", baseController.getAll);
     apiRouter.post("/v1/base/create", baseController.create);
 
     this.express.use("/api", apiRouter);
   }
 
   async initDatasource() {
-    // TODO : 서비스에서는 주석해제 후 사용
     await this.dataSource.initialize();
   }
 
   run() {
-    this.express.listen(this.port, () => {
+    this.server = this.express.listen(this.port, () => {
       log(`express running on ${this.port}`);
     });
+  }
+
+  // cleanup 메서드 추가
+  async cleanup() {
+    if (this.server) {
+      await new Promise<void>((resolve, reject) => {
+        this.server!.close((err?: Error) => (err ? reject(err) : resolve()));
+      });
+    }
+    if (this.dataSource.isInitialized) {
+      await this.dataSource.destroy();
+    }
   }
 }
 
