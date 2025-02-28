@@ -5,6 +5,7 @@ import cors from "cors";
 import type { DataSource } from "typeorm";
 import { log } from "@repo/logger";
 import baseController from "@api/controllers/base";
+import { errorMiddleware } from "@api/middlewares/error";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -28,14 +29,6 @@ class App {
   }
 
   mountRouter() {
-    // base router
-    this.express
-      .disable("x-powered-by")
-      .use(morgan("dev"))
-      .use(urlencoded({ extended: true }))
-      .use(json())
-      .use(cors());
-
     const apiRouter = Router();
     apiRouter.get("/v1/base/status", baseController.getStatus);
     apiRouter.get("/v1/base/version", baseController.getVersion);
@@ -43,7 +36,15 @@ class App {
     apiRouter.get("/v1/base/:id", baseController.get);
     apiRouter.post("/v1/base", baseController.create);
 
-    this.express.use("/api", apiRouter);
+    // base router
+    this.express
+      .disable("x-powered-by")
+      .use(urlencoded({ extended: true }))
+      .use(json())
+      .use(cors())
+      .use(morgan("dev"))
+      .use("/api", apiRouter)
+      .use(errorMiddleware);
   }
 
   async initDatasource() {

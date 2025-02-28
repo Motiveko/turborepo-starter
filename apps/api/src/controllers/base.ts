@@ -14,11 +14,13 @@ import type {
   TypedResponse,
 } from "@api/types/express";
 import baseService from "@api/services/base";
+import { Controller } from "@api/decorators/controller";
 
 type VersionResponse = {
   version: string;
 };
 
+@Controller()
 class BaseController {
   async list(
     req: TypedRequest,
