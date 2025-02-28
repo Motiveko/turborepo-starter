@@ -4,7 +4,12 @@ import {
   ValidateBody,
   ValidateParams,
 } from "@api/decorators/request-validator";
-import { BaseIdDto, BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
+import {
+  BaseIdDto,
+  BaseResponseDto,
+  CreateBaseDto,
+  PatchBaseDto,
+} from "@api/dtos/base";
 import type {
   DataAndMessageResponse,
   RequestWithBody,
@@ -52,6 +57,16 @@ class BaseController {
   ) {
     const result = await baseService.create(req.body);
     res.json({ message: "ok", data: result });
+  }
+
+  @ValidateBody(PatchBaseDto)
+  @ValidateParams(BaseIdDto)
+  async patch(
+    req: TypedRequest<PatchBaseDto, BaseIdDto>,
+    res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>
+  ) {
+    const data = await baseService.patch(req.params.id, req.body);
+    res.json({ message: "ok", data });
   }
 
   async getStatus(req: TypedRequest, res: TypedResponse) {

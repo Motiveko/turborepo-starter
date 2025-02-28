@@ -1,3 +1,4 @@
+import { PatchBaseDto } from "@api/dtos/base";
 import {
   Column,
   CreateDateColumn,
@@ -25,4 +26,9 @@ export class BaseEntity {
 
   @CreateDateColumn({ type: "timestamptz" })
   createdAt: Date;
+
+  patch(dto: Partial<Pick<typeof this, "name" | "email" | "password">>) {
+    Object.assign(this, dto);
+    return this;
+  }
 }

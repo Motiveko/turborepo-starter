@@ -66,4 +66,21 @@ describe("Server", () => {
       .expect(200)
       .then((res) => expect(res.body.data).toEqual(created));
   });
+
+  it("base patch - 404", async () => {
+    await supertest(app.getExpress()).patch(`/api/v1/base/999999`).expect(404);
+  });
+
+  it("base patch - 200", async () => {
+    const patchedName = "patched_name";
+    const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
+      .body.data[0];
+    await supertest(app.getExpress())
+      .patch(`/api/v1/base/${base.id}`)
+      .send({ name: patchedName })
+      .expect(200)
+      .then((res) => {
+        expect(res.body.data.name).toEqual(patchedName);
+      });
+  });
 });

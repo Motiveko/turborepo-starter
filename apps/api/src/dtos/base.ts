@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString, MinLength } from "class-validator";
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MinLength,
+} from "class-validator";
 import { Exclude, Expose, plainToInstance, Transform } from "class-transformer";
 import { BaseEntity } from "@api/entities/base";
 
@@ -7,6 +13,21 @@ export class BaseIdDto {
   @IsNotEmpty()
   @Transform(({ value }) => Number(value as string), { toClassOnly: true })
   id: number;
+}
+
+export class PatchBaseDto {
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsString()
+  @IsOptional()
+  email?: string;
+
+  @IsString()
+  @MinLength(6)
+  @IsOptional()
+  password?: string;
 }
 
 export class CreateBaseDto {

@@ -5,7 +5,6 @@ import { Config } from "@api/config/env";
 let datasource: DataSource;
 export const getDatasource = () => {
   if (!datasource) {
-    console.log(`Config.TYPEORM_USERNAME: ${Config.TYPEORM_USERNAME}`);
     datasource = new DataSource({
       name: "default",
       type: "postgres",

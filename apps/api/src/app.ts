@@ -35,6 +35,7 @@ class App {
     apiRouter.get("/v1/base/list", baseController.list);
     apiRouter.get("/v1/base/:id", baseController.get);
     apiRouter.post("/v1/base", baseController.create);
+    apiRouter.patch("/v1/base/:id", baseController.patch);
 
     // base router
     this.express

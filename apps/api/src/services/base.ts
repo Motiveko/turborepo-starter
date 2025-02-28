@@ -1,6 +1,7 @@
 import { getDatasource } from "@api/datasources";
-import { BaseResponseDto, CreateBaseDto } from "@api/dtos/base";
+import { BaseResponseDto, CreateBaseDto, PatchBaseDto } from "@api/dtos/base";
 import { BaseEntity } from "@api/entities/base";
+import { NotFoundError } from "@api/errors/not-found";
 
 const baseRepository = getDatasource().getRepository(BaseEntity);
 class BaseService {
@@ -23,7 +24,16 @@ class BaseService {
     return BaseResponseDto.fromEntity(savedEntity);
   }
 
-  update(id: string, dto: CreateBaseDto) {}
+  async patch(id: number, dto: PatchBaseDto) {
+    const entity = await baseRepository.findOneBy({ id });
+    if (!entity) {
+      throw new NotFoundError();
+    }
+
+    const newEntity = await baseRepository.save(entity.patch(dto));
+    return BaseResponseDto.fromEntity(newEntity);
+  }
+
   delete(id: string) {}
 }
 
