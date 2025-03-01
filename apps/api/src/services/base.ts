@@ -38,6 +38,21 @@ class BaseService {
     return BaseResponseDto.fromEntity(newEntity);
   }
 
+  async remove(id: number) {
+    // entity의 cascade 동작이나 BeforeRemove, AfterRemove 등의 라이프사이클이 필요할경우 remove를 사용한다.
+    // 단순삭제는 delete를 활용
+    const entity = await this.getEntityById(id);
+    await baseRepository.remove(entity);
+    return;
+  }
+
+  async delete(id: number) {
+    const result = await baseRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundError();
+    }
+  }
+
   private async getEntityById(id: number) {
     const entity = await baseRepository.findOne({ where: { id } });
     if (!entity) {

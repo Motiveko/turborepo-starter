@@ -74,6 +74,13 @@ class BaseController {
     const data = await baseService.put(req.params.id, req.body);
     res.json({ message: "ok", data });
   }
+
+  @ValidateParams(BaseIdDto)
+  async delete(req: RequestWithParams<BaseIdDto>, res: TypedResponse) {
+    await baseService.remove(req.params.id);
+    res.json({ message: "ok" });
+  }
+
   async getStatus(req: TypedRequest, res: TypedResponse) {
     res.send({ message: "ok" });
   }

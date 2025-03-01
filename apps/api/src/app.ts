@@ -37,6 +37,7 @@ class App {
     apiRouter.post("/v1/base", baseController.create);
     apiRouter.patch("/v1/base/:id", baseController.patch);
     apiRouter.put("/v1/base/:id", baseController.put);
+    apiRouter.delete("/v1/base/:id", baseController.delete);
 
     // base router
     this.express
