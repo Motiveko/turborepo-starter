@@ -1,10 +1,11 @@
 import path from "node:path";
-import { log } from "@repo/logger";
 import express from "express";
+import logger from "server/logger";
 
 const app = express();
 
-log(path.join(__dirname, ".."));
+logger.log(path.join(__dirname, ".."));
+
 // eslint-disable-next-line import/no-named-as-default-member -- express only
 const expressStaticMiddlewares = express.static(path.join(__dirname, ".."), {
   index: false,
@@ -18,5 +19,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  log(`web server running on ${port}`);
+  logger.log(`web server running on ${port}`);
 });

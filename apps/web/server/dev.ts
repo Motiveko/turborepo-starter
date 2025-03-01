@@ -1,6 +1,6 @@
-import { log } from "@repo/logger";
 import express from "express";
 import { createServer as createViteServer } from "vite";
+import logger from "server/logger";
 
 const app = express();
 
@@ -16,9 +16,9 @@ const getViteMiddlewares = async () => {
 
 const port = process.env.PORT || 4321;
 
-log(`리액트 서버: http://localhost:${port}`);
+logger.log(`리액트 서버: http://localhost:${port}`);
 
 app.use(await getViteMiddlewares());
 app.listen(port, () => {
-  log(`web server running on ${port}`);
+  logger.log(`web server running on ${port}`);
 });
