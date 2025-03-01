@@ -2,6 +2,7 @@ import { json, urlencoded } from "body-parser";
 import express, { Router, type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import helmet from "helmet";
 import type { DataSource } from "typeorm";
 import { log } from "@repo/logger";
 import baseController from "@api/controllers/base";
@@ -44,6 +45,7 @@ class App {
       .disable("x-powered-by")
       .use(urlencoded({ extended: true }))
       .use(json())
+      .use(helmet())
       .use(cors())
       .use(morgan("dev"))
       .use("/api", apiRouter)
