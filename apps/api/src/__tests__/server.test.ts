@@ -73,10 +73,9 @@ describe("Server", () => {
 
   it("base patch - 200", async () => {
     const patchedName = "patched_name";
-    const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
-      .body.data[0];
+
     await supertest(app.getExpress())
-      .put(`/api/v1/base/${base.id}`)
+      .patch(`/api/v1/base/${created.id}`)
       .send({ name: patchedName })
       .expect(200)
       .then((res) => {
@@ -97,7 +96,7 @@ describe("Server", () => {
       .expect(400);
   });
 
-  it.only("base put - 200", async () => {
+  it("base put - 200", async () => {
     const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
       .body.data[1];
 
@@ -117,5 +116,15 @@ describe("Server", () => {
         expect(email).toEqual(newBase.email);
         expect(password).toBe(undefined);
       });
+  });
+
+  it("base delete - 404", async () => {
+    await supertest(app.getExpress()).delete(`/api/v1/base/090909`).expect(404);
+  });
+
+  it("base delete - 200", async () => {
+    await supertest(app.getExpress())
+      .delete(`/api/v1/base/${created.id}`)
+      .expect(200);
   });
 });
