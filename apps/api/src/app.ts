@@ -4,9 +4,10 @@ import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 import type { DataSource } from "typeorm";
-import { log } from "@repo/logger";
 import baseController from "@api/controllers/base";
 import { errorMiddleware } from "@api/middlewares/error";
+import logger from "@api/lib/logger";
+import { loggerMiddleware } from "@api/middlewares/logger";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -43,6 +44,7 @@ class App {
     // base router
     this.express
       .disable("x-powered-by")
+      .use(loggerMiddleware)
       .use(urlencoded({ extended: true }))
       .use(json())
       .use(helmet())
@@ -58,7 +60,7 @@ class App {
 
   run() {
     this.server = this.express.listen(this.port, () => {
-      log(`express running on ${this.port}`);
+      logger.log(`express running on ${this.port}`);
     });
   }
 
