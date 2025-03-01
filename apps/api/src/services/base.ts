@@ -16,10 +16,7 @@ class BaseService {
   }
 
   async getById(id: number) {
-    const entity = await baseRepository.findOne({ where: { id } });
-    if (!entity) {
-      throw new NotFoundError(`base not found for id: ${id}`);
-    }
+    const entity = await this.getEntityById(id);
     return BaseResponseDto.fromEntity(entity);
   }
 
@@ -30,25 +27,24 @@ class BaseService {
   }
 
   async patch(id: number, dto: PatchBaseDto) {
-    const entity = await baseRepository.findOneBy({ id });
-    if (!entity) {
-      throw new NotFoundError();
-    }
-
+    const entity = await this.getEntityById(id);
     const newEntity = await baseRepository.save(entity.patch(dto));
     return BaseResponseDto.fromEntity(newEntity);
   }
 
   async put(id: number, dto: PutBaseDto) {
-    const entity = await baseRepository.findOneBy({ id });
-    if (!entity) {
-      throw new NotFoundError();
-    }
+    const entity = await this.getEntityById(id);
     const newEntity = await baseRepository.save(entity.patch(dto));
     return BaseResponseDto.fromEntity(newEntity);
   }
 
-  delete(id: string) {}
+  private async getEntityById(id: number) {
+    const entity = await baseRepository.findOne({ where: { id } });
+    if (!entity) {
+      throw new NotFoundError(`base not found for id: ${id}`);
+    }
+    return entity;
+  }
 }
 
 const baseService = new BaseService();
