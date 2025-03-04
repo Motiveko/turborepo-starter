@@ -5,15 +5,11 @@ import winston, {
   Logger as WinstonLogger,
   LoggerOptions,
 } from "winston";
-
-// 각 전송(transport) 설정을 위한 인터페이스
-interface TransportConfig {
-  type: "console" | "file" | "http";
-  options?: any; // 각 전송에 따른 winston transport 옵션
-}
+import "winston-daily-rotate-file";
+import { getTransportInstances, TransportConfig } from "./transports";
 
 // 전체 로거 설정 인터페이스
-interface LoggerConfig {
+export interface LoggerConfig {
   level?: string;
   transports?: TransportConfig[];
 }
@@ -30,7 +26,8 @@ const removeEmptyMessage = winston.format((info) => {
 class Logger {
   private logger: WinstonLogger;
 
-  constructor(config?: LoggerConfig) {
+  constructor(config: LoggerConfig = {}) {
+    const transports = getTransportInstances(config.transports);
     const loggerOptions: LoggerOptions = {
       level: config?.level || "info",
       format: winston.format.combine(
@@ -38,9 +35,7 @@ class Logger {
         removeEmptyMessage(),
         winston.format.json() // 로그를 JSON 형태로 출력
       ),
-      transports: [
-        new winston.transports.Console(), // 콘솔 출력
-      ],
+      transports,
     };
 
     this.logger = winston.createLogger(loggerOptions);
