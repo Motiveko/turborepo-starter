@@ -4,7 +4,9 @@ const env = process.env.NODE_ENV || "development";
 dotenv.config({ path: `.env.${env}` });
 
 export const Config = {
+  SERVICE_NAME: process.env.SERVICE_NAME,
   PORT: process.env.PORT,
+  APPLICATION_LOG_DIR: process.env.APPLICATION_LOG_DIR,
   TYPEORM_CONNECTION: process.env.TYPEORM_CONNECTION,
   TYPEORM_HOST: process.env.TYPEORM_HOST,
   TYPEORM_USERNAME: process.env.TYPEORM_USERNAME,
