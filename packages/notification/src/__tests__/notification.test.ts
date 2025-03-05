@@ -1,17 +1,17 @@
 import { describe, it, expect, jest } from "@jest/globals";
-import NotificationManager from "..";
-import Logger from "@repo/logger";
-// TODO : create test
+import dotenv from "dotenv";
+import NotificationManager from "@notification/index";
 
-describe("test notificaton", () => {
+dotenv.config();
+
+describe("test NotificationManager", () => {
   it("test slack notification", async () => {
     const notificationManager = new NotificationManager({
       services: [
         {
           type: "slack",
           options: {
-            webhookUrl:
-              "https://hooks.slack.com/services/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",
+            webhookUrl: process.env.TEST_SLACK_WEBHOOK_URL as string,
           },
         },
       ],
