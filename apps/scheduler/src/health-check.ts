@@ -1,5 +1,6 @@
 import NotificationManager from "@repo/notification";
 import { Config } from "@scheduler/config/env";
+import { logger } from "@scheduler/lib/logger";
 import axios from "axios";
 import schedule from "node-schedule";
 
@@ -38,10 +39,9 @@ const checkService = async (service: Service) => {
       // 200 응답이 아닐 경우 실패 처리
       handleFailure(service);
     }
-    console.log(" ✅ success ", service.type);
+    logger.info(`✅ success , ${service.type}`);
   } catch (error) {
-    console.error("❌ fail ", service.type);
-    console.error((error as Error).message);
+    logger.info(`❌ fail , ${service.type}, ${(error as Error).message}`);
     // 요청 실패 또는 타임아웃 발생 시 실패 처리
     handleFailure(service);
   }
@@ -59,11 +59,11 @@ const handleFailure = async (service: Service) => {
   lastNotificationTimestamps[service.type] = now;
   const message = `Service "${service.type}" failed at ${new Date(now).toISOString()}`;
   const result = await notificationManager.sendMessage({ message });
-  console.log(result);
+  logger.info(result);
 };
 
 export const runHealthChecker = () => {
-  console.log("[runHealthChecker]");
+  logger.info("[runHealthChecker]");
   // node-schedule을 사용하여 매 5초마다 모든 서비스 헬스체크 수행
   // Cron 형식 (초 분 시 일 월 요일): 매 5초마다 실행
   schedule.scheduleJob("*/5 * * * * *", () => {
