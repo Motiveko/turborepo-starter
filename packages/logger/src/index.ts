@@ -47,16 +47,28 @@ class Logger {
   }
 
   // 레벨별 편의 메서드들
-  info(meta: any) {
-    this.logger.info("", meta);
+  info(log: any) {
+    let _log = log;
+    if (typeof log === "string") {
+      _log = { message: log };
+    }
+    this.logger.info("", _log);
   }
 
-  warn(meta: any) {
-    this.logger.info("", meta);
+  warn(log: any) {
+    let _log = log;
+    if (typeof log === "string") {
+      _log = { message: log };
+    }
+    this.logger.warn("", _log);
   }
 
-  error(meta: any) {
-    this.logger.info("", meta);
+  error(log: any) {
+    let _log = log;
+    if (typeof log === "string") {
+      _log = { message: log };
+    }
+    this.logger.error("", _log);
   }
 }
 
