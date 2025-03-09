@@ -18,9 +18,17 @@
   - TODO : 테스트 db가 있는데 mock data setup 및 delete 까지 구축
 - logger 개선
 
-  - [ ] winston 모듈 추가
-  - [ ] transporter를 선택 가능하게 변경( options 형태로, file/http/stream 추가필요, )
+  - [x] winston 모듈 추가
+  - [x] transporter를 선택 가능하게 변경( options 형태로, file/http/stream 추가필요, )
 
+- [ ] lint 미동작하는거 확인 및 반영
 - [ ] 공통 모듈 분리
   - api도 웹도 모두 msa로 쪼개질 수있음
   - api에서 공통으로 쓸 decorator나 middlewares 같은거는 모듈분리가 필요하다. ( 이건 추후 )
+
+### web
+
+- [ ] 기본 라우팅 세팅
+- [ ] 상태관리 추가 (`zustand`)
+- [ ] tailwindcss 추가
+- [ ] api client 추가
