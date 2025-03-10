@@ -9,7 +9,8 @@ function HomeLayout({ children }: HomeLayoutProps): JSX.Element {
     <div className="w-[100vw] h-[100vh] flex flex-col">
       <header>
         <nav>
-          <Link to="/">Home</Link> | <Link to="/about">About</Link>
+          <Link to="/">Home</Link> | <Link to="/about">About</Link> |{" "}
+          <Link to="/Todo">Todo</Link>
         </nav>
       </header>
       <main className="flex-1 flex justify-center items-center">
