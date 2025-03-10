@@ -1,7 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
-import App from "@web/app";
 import "@web/index.css";
 import AppRoutes from "@web/app/routes";
 
