@@ -1,4 +1,3 @@
-import React from "react";
 import { CounterButton } from "@repo/ui/counter-button";
 import { Link } from "@repo/ui/link";
 
