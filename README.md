@@ -30,5 +30,9 @@
 
 - [ ] 기본 라우팅 세팅
 - [ ] 상태관리 추가 (`zustand`)
-- [ ] tailwindcss 추가
+- [x] tailwindcss 추가
 - [ ] api client 추가
+
+### notification
+
+- [ ] discord notification
