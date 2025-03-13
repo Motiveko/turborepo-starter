@@ -41,6 +41,8 @@ class App {
     apiRouter.put("/v1/base/:id", baseController.put);
     apiRouter.delete("/v1/base/:id", baseController.delete);
 
+    this.express.get("/healthz", (req, res) => res.send(200));
+
     // base router
     this.express
       .disable("x-powered-by")
