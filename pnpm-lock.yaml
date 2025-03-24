@@ -249,9 +249,6 @@ importers:
       '@vercel/style-guide':
         specifier: ^5.2.0
         version: 5.2.0(eslint@8.57.1)(prettier@3.5.3)(typescript@5.7.3)
-      eslint-config-turbo:
-        specifier: ^2.0.0
-        version: 2.4.4(eslint@8.57.1)(turbo@2.4.4)
       eslint-plugin-mdx:
         specifier: ^3.1.5
         version: 3.2.0(eslint@8.57.1)
@@ -4070,11 +4067,6 @@ packages:
       webidl-conversions: 7.0.0
     dev: true
 
-  /dotenv@16.0.3:
-    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
-    engines: {node: '>=12'}
-    dev: true
-
   /dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
@@ -4392,17 +4384,6 @@ packages:
       eslint: 8.57.1
     dev: true
 
-  /eslint-config-turbo@2.4.4(eslint@8.57.1)(turbo@2.4.4):
-    resolution: {integrity: sha512-4w/heWywWkFw09a5MY5lCvb9suJlhBSkzNtGTwM5+zRif4rksubaMYy1pD0++5rqoDVcQax25jCrtii9ptsNDw==}
-    peerDependencies:
-      eslint: '>6.6.0'
-      turbo: '>2.0.0'
-    dependencies:
-      eslint: 8.57.1
-      eslint-plugin-turbo: 2.4.4(eslint@8.57.1)(turbo@2.4.4)
-      turbo: 2.4.4
-    dev: true
-
   /eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.31.0):
     resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
     engines: {node: '>= 4'}
@@ -4706,17 +4687,6 @@ packages:
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-    dev: true
-
-  /eslint-plugin-turbo@2.4.4(eslint@8.57.1)(turbo@2.4.4):
-    resolution: {integrity: sha512-myEnQTjr3FkI0j1Fu0Mqnv1z8n0JW5iFTOUNzHaEevjzl+1uzMSsFwks/x8i3rGmI3EYtC1BY8K2B2pS0Vfx6w==}
-    peerDependencies:
-      eslint: '>6.6.0'
-      turbo: '>2.0.0'
-    dependencies:
-      dotenv: 16.0.3
-      eslint: 8.57.1
-      turbo: 2.4.4
     dev: true
 
   /eslint-plugin-unicorn@48.0.1(eslint@8.57.1):

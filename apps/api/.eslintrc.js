@@ -5,5 +5,4 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  overrides: [{ "import/no-extraneous-dependencies": "off" }],
 };

@@ -1,7 +1,6 @@
-const config = require("@repo/eslint-config/react");
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  ...config,
+  extends: ["@repo/eslint-config/react"],
   parserOptions: {
     project: true,
   },
