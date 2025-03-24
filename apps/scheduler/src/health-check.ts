@@ -1,8 +1,8 @@
 import NotificationManager from "@repo/notification";
-import { Config } from "@scheduler/config/env";
-import { logger } from "@scheduler/lib/logger";
 import axios from "axios";
 import schedule from "node-schedule";
+import { Config } from "@scheduler/config/env";
+import { logger } from "@scheduler/lib/logger";
 
 const notificationManager = new NotificationManager({
   retry: 2,
@@ -27,7 +27,7 @@ const services: Service[] = [
 ];
 
 // 각 서비스 타입별 마지막 알림 전송 시간을 기록 (타임스탬프: ms)
-const lastNotificationTimestamps: { [key: string]: number } = {};
+const lastNotificationTimestamps: Record<string, number> = {};
 
 // 서비스 헬스체크 함수: GET 요청을 timeout 2초로 보내고, 실패 시 알림 처리
 const checkService = async (service: Service) => {

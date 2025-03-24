@@ -17,18 +17,18 @@ export const TodoInput: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form className="flex gap-2" onSubmit={handleSubmit}>
       <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
         className="border p-2 rounded"
-        placeholder="Enter todo"
         disabled={loading}
+        onChange={(e) => { setText(e.target.value); }}
+        placeholder="Enter todo"
+        value={text}
       />
       <button
-        type="submit"
-        disabled={loading}
         className="bg-blue-500 text-white px-4 py-2 rounded"
+        disabled={loading}
+        type="submit"
       >
         {loading ? "Adding..." : "Add"}
       </button>

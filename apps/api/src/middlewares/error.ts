@@ -1,5 +1,5 @@
+import type { ErrorRequestHandler } from "express";
 import { NotFoundError } from "@api/errors/not-found";
-import { ErrorRequestHandler } from "express";
 
 export const errorMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err.message);

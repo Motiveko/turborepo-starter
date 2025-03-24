@@ -11,7 +11,7 @@ describe("test NotificationManager", () => {
         {
           type: "slack",
           options: {
-            webhookUrl: process.env.TEST_SLACK_WEBHOOK_URL as string,
+            webhookUrl: process.env.TEST_SLACK_WEBHOOK_URL!,
           },
         },
       ],

@@ -1,6 +1,6 @@
 import winston from "winston";
 import "winston-daily-rotate-file";
-import DailyRotateFile from "winston-daily-rotate-file";
+import type DailyRotateFile from "winston-daily-rotate-file";
 
 export type TransportConfig =
   | ConsoleTransportConfig

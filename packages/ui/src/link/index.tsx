@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ReactElement, ReactNode } from "react";
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode;
@@ -6,7 +6,12 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
 }
 
-export function Link({ children, href, newTab, ...other }: LinkProps) {
+export function Link({
+  children,
+  href,
+  newTab,
+  ...other
+}: LinkProps): ReactElement {
   return (
     <a
       href={href}

@@ -1,6 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 export function ValidateBody<T extends object>(dtoClass: new () => T) {
   return function (

@@ -1,4 +1,4 @@
-import { NextFunction, RequestHandler } from "express";
+import type { NextFunction, RequestHandler } from "express";
 
 /** request handler(controller)에서 에러 발생시 next()로 전달해서 에러 핸들러로 보내질 수 있도록 하는 wrapper function */
 const asyncHandler = (fn: RequestHandler): RequestHandler => {

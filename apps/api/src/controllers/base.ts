@@ -1,29 +1,31 @@
-import packageJson from "../../package.json";
 import {
   ValidateBody,
   ValidateParams,
 } from "@api/decorators/request-validator";
+import type {
+  BaseResponseDto} from "@api/dtos/base";
 import {
   BaseIdDto,
-  BaseResponseDto,
   CreateBaseDto,
   PatchBaseDto,
   PutBaseDto,
 } from "@api/dtos/base";
-import type {
-  DataAndMessageResponse,
+import {
   RequestWithBody,
   RequestWithParams,
   TypedNextFunction,
   TypedRequest,
-  TypedResponse,
+  TypedResponse} from "@api/types/express";
+import type {
+  DataAndMessageResponse
 } from "@api/types/express";
 import baseService from "@api/services/base";
 import { Controller } from "@api/decorators/controller";
+import packageJson from "../../package.json";
 
-type VersionResponse = {
+interface VersionResponse {
   version: string;
-};
+}
 
 @Controller()
 class BaseController {

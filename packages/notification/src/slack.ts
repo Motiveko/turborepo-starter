@@ -1,9 +1,10 @@
 import axios from "axios";
+import type {
+  SendMessagePayload} from "./types";
 import {
   INotificationService,
   NotificationService,
-  NotificationType,
-  SendMessagePayload,
+  NotificationType
 } from "./types";
 
 export interface SlackNotificationServiceOptions {

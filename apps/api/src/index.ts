@@ -1,7 +1,6 @@
-import "@api/config/env";
+import { Config } from "@api/config/env";
 import App from "@api/app";
 import { getDatasource } from "@api/datasources";
-import { Config } from "@api/config/env";
 import logger from "@api/lib/logger";
 
 const port = Number(Config.PORT || 5001);

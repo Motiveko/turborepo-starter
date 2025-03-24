@@ -1,5 +1,6 @@
+import type { LoggerConfig } from "@repo/logger";
+import Logger from "@repo/logger";
 import { Config } from "@api/config/env";
-import Logger, { LoggerConfig } from "@repo/logger";
 
 const transports: LoggerConfig["transports"] = [{ type: "console" }];
 if (Config.APPLICATION_LOG_DIR) {
@@ -15,7 +16,7 @@ if (Config.APPLICATION_LOG_DIR) {
   });
 }
 
-const _logger = new Logger({ transports: transports });
+const _logger = new Logger({ transports });
 
 const logger = {
   info: _logger.info.bind(_logger),

@@ -1,8 +1,9 @@
+import type {
+  SendMessagePayload} from "@notification/types";
 import {
   INotificationService,
   NotificationService,
-  NotificationType,
-  SendMessagePayload,
+  NotificationType
 } from "@notification/types";
 
 export interface DiscordNotificationServiceOptions {

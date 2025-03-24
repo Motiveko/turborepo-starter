@@ -1,9 +1,10 @@
 import { getDatasource } from "@api/datasources";
-import {
-  BaseResponseDto,
+import type {
   CreateBaseDto,
   PatchBaseDto,
-  PutBaseDto,
+  PutBaseDto} from "@api/dtos/base";
+import {
+  BaseResponseDto
 } from "@api/dtos/base";
 import { BaseEntity } from "@api/entities/base";
 import { NotFoundError } from "@api/errors/not-found";
@@ -43,7 +44,7 @@ class BaseService {
     // 단순삭제는 delete를 활용
     const entity = await this.getEntityById(id);
     await baseRepository.remove(entity);
-    return;
+    
   }
 
   async delete(id: number) {

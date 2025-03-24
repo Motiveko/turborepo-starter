@@ -32,14 +32,14 @@ class App {
 
   mountRouter() {
     const apiRouter = Router();
-    apiRouter.get("/v1/base/status", baseController.getStatus);
-    apiRouter.get("/v1/base/version", baseController.getVersion);
-    apiRouter.get("/v1/base/list", baseController.list);
-    apiRouter.get("/v1/base/:id", baseController.get);
-    apiRouter.post("/v1/base", baseController.create);
-    apiRouter.patch("/v1/base/:id", baseController.patch);
-    apiRouter.put("/v1/base/:id", baseController.put);
-    apiRouter.delete("/v1/base/:id", baseController.delete);
+    apiRouter.get("/v1/base/status", baseController.getStatus.bind(this));
+    apiRouter.get("/v1/base/version", baseController.getVersion.bind(this));
+    apiRouter.get("/v1/base/list", baseController.list.bind(this));
+    apiRouter.get("/v1/base/:id", baseController.get.bind(this));
+    apiRouter.post("/v1/base", baseController.create.bind(this));
+    apiRouter.patch("/v1/base/:id", baseController.patch.bind(this));
+    apiRouter.put("/v1/base/:id", baseController.put.bind(this));
+    apiRouter.delete("/v1/base/:id", baseController.delete.bind(this));
 
     this.express.get("/healthz", (req, res) => res.send(200));
 
@@ -70,7 +70,9 @@ class App {
   async cleanup() {
     if (this.server) {
       await new Promise<void>((resolve, reject) => {
-        this.server!.close((err?: Error) => (err ? reject(err) : resolve()));
+        this.server!.close((err?: Error) => {
+          err ? reject(err) : resolve();
+        });
       });
     }
     if (this.dataSource.isInitialized) {

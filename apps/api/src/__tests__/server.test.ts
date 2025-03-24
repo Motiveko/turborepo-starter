@@ -2,14 +2,14 @@ import supertest from "supertest";
 import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
 import App from "@api/app";
 import { getDatasource } from "@api/datasources";
-import { BaseResponseDto } from "@api/dtos/base";
+import type { BaseResponseDto } from "@api/dtos/base";
 
 describe("Server", () => {
   let app: App;
   let created: BaseResponseDto;
   beforeAll(async () => {
     app = new App({ dataSource: getDatasource(), port: 3000 });
-    await app.initDatasource().then(() => app.mountRouter());
+    await app.initDatasource().then(() => { app.mountRouter(); });
   });
 
   afterAll(async () => {
@@ -64,7 +64,7 @@ describe("Server", () => {
     await supertest(app.getExpress())
       .get(`/api/v1/base/${created.id}`)
       .expect(200)
-      .then((res) => expect(res.body.data).toEqual(created));
+      .then((res) => { expect(res.body.data).toEqual(created); });
   });
 
   it("base patch - 404", async () => {

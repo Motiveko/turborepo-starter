@@ -1,6 +1,6 @@
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 // TODO : middleware 방식이 필요할경우 사용
 export function validationMiddleware<T extends object>(
@@ -22,6 +22,6 @@ export function validationMiddleware<T extends object>(
     }
 
     req.body = dtoObject;
-    return next();
+    next();
   };
 }

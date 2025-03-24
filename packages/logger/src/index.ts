@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // logger.ts
-import winston, {
-  format,
-  transports,
-  Logger as WinstonLogger,
-  LoggerOptions,
-} from "winston";
+import type { Logger as WinstonLogger, LoggerOptions } from "winston";
+import winston from "winston";
 import "winston-daily-rotate-file";
-import { getTransportInstances, TransportConfig } from "./transports";
+import type { TransportConfig } from "./transports";
+import { getTransportInstances } from "./transports";
 
 // 전체 로거 설정 인터페이스
 export interface LoggerConfig {
@@ -29,7 +27,7 @@ class Logger {
   constructor(config: LoggerConfig = {}) {
     const transports = getTransportInstances(config.transports);
     const loggerOptions: LoggerOptions = {
-      level: config?.level || "info",
+      level: config.level || "info",
       format: winston.format.combine(
         winston.format.timestamp(), // 로그 시각 추가
         removeEmptyMessage(),

@@ -1,4 +1,5 @@
-import Logger, { LoggerConfig } from "@repo/logger";
+import type { LoggerConfig } from "@repo/logger";
+import Logger from "@repo/logger";
 import { Config } from "@scheduler/config/env";
 
 const transports: LoggerConfig["transports"] = [{ type: "console" }];
@@ -15,4 +16,4 @@ if (Config.APPLICATION_LOG_DIR) {
   });
 }
 
-export const logger = new Logger({ transports: transports });
+export const logger = new Logger({ transports });

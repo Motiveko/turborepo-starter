@@ -1,5 +1,5 @@
 import Logger from "@repo/logger";
-import { SlackNotificationServiceOptions } from "./slack";
+import type { SlackNotificationServiceOptions } from "./slack";
 
 interface SlackOptions {
   type: "slack";
@@ -18,7 +18,7 @@ export interface SendMessagePayload {
 
 export interface INotificationService {
   type: NotificationType;
-  sendMessage(payload: SendMessagePayload): Promise<void>;
+  sendMessage: (payload: SendMessagePayload) => Promise<void>;
 }
 
 export abstract class NotificationService implements INotificationService {
@@ -38,10 +38,10 @@ export interface NotificationManagerOption {
   services: NotificationServiceOption[];
 }
 
-type SendMessageFailResult = {
+interface SendMessageFailResult {
   type: NotificationType;
   message: string;
-};
+}
 
 export interface SendMessageResult {
   success: { type: NotificationType } | null;

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 interface MessageResponse {
   message: string;
@@ -19,9 +19,9 @@ export type RequestWithParams<T extends Record<string, any>> = TypedRequest<
   T
 >;
 
-export interface TypedResponse<T = DefaultResponse> extends Response<T> {}
+export type TypedResponse<T = DefaultResponse> = Response<T>
 
-export interface TypedNextFunction extends NextFunction {}
+export type TypedNextFunction = NextFunction
 
 export interface DataAndMessageResponse<T> extends MessageResponse {
   data: T;

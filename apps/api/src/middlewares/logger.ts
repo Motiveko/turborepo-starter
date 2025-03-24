@@ -1,6 +1,6 @@
+import type { RequestHandler } from "express";
 import logger from "@api/lib/logger";
 import { startTimer } from "@api/lib/timer";
-import { RequestHandler } from "express";
 
 export const loggerMiddleware: RequestHandler = (req, res, next) => {
   const startTime = Date.now();

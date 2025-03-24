@@ -7,12 +7,12 @@ export const TodoList: React.FC = () => {
   return (
     <ul>
       {todos.map((todo) => (
-        <li key={todo.id} className="flex items-center gap-2">
+        <li className="flex items-center gap-2" key={todo.id}>
           <span>{todo.text}</span>
           <button
-            onClick={() => removeTodo(todo.id)}
-            disabled={loadingIds.has(todo.id)}
             className="text-red-500 disabled:text-gray-300"
+            disabled={loadingIds.has(todo.id)}
+            onClick={() => removeTodo(todo.id)}
           >
             {loadingIds.has(todo.id) ? "Deleting..." : "Delete"}
           </button>
