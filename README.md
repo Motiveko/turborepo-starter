@@ -51,6 +51,10 @@
     - dnd 등..
   - [ ] Compound Component
     - 이게 내가 알던거랑 좀 다르다. Context를 쓰는 컴포넌트를 말하는듯.
+  - [ ] [State Reducer](https://chatgpt.com/c/67d4441e-ac48-800c-bc59-51d07c73e51e)
+    - Autocomplete / Select / Dropdown
+    - Step Form
+    - Modal, Tooltip
 
 ### notification
 
