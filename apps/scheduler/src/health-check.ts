@@ -23,7 +23,7 @@ interface Service {
 }
 
 const services: Service[] = [
-  { type: "time-talk", host: "http://localhost:5001", path: "/healthz" },
+  // { type: "time-talk", host: "http://localhost:5001", path: "/healthz" },
 ];
 
 // 각 서비스 타입별 마지막 알림 전송 시간을 기록 (타임스탬프: ms)
