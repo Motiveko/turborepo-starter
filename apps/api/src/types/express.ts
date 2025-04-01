@@ -19,9 +19,9 @@ export type RequestWithParams<T extends Record<string, any>> = TypedRequest<
   T
 >;
 
-export type TypedResponse<T = DefaultResponse> = Response<T>
+export type TypedResponse<T = DefaultResponse> = Response<T>;
 
-export type TypedNextFunction = NextFunction
+export type TypedNextFunction = NextFunction;
 
 export interface DataAndMessageResponse<T> extends MessageResponse {
   data: T;

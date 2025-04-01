@@ -2,22 +2,21 @@ import {
   ValidateBody,
   ValidateParams,
 } from "@api/decorators/request-validator";
-import type {
-  BaseResponseDto} from "@api/dtos/base";
+import type { BaseResponseDto } from "@api/dtos/base";
 import {
   BaseIdDto,
   CreateBaseDto,
   PatchBaseDto,
   PutBaseDto,
 } from "@api/dtos/base";
-import {
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- TODO: fix
+import type {
   RequestWithBody,
   RequestWithParams,
   TypedNextFunction,
   TypedRequest,
-  TypedResponse} from "@api/types/express";
-import type {
-  DataAndMessageResponse
+  TypedResponse,
+  DataAndMessageResponse,
 } from "@api/types/express";
 import baseService from "@api/services/base";
 import { Controller } from "@api/decorators/controller";
