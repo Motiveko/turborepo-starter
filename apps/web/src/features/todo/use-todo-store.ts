@@ -13,13 +13,18 @@ interface TodoState {
   removeTodo: (id: number) => Promise<void>;
 }
 
+const wait = (time: number) =>
+  new Promise((res) => {
+    setTimeout(res, time);
+  });
+
 export const useTodoStore = create<TodoState>()(
-  immer((set, get) => ({
+  immer((set) => ({
     todos: [],
     loadingIds: new Set(),
 
     addTodo: async (text: string) => {
-      await new Promise((res) => setTimeout(res, 500));
+      await wait(500);
 
       set((state) => {
         state.todos.push({
@@ -34,7 +39,7 @@ export const useTodoStore = create<TodoState>()(
         state.loadingIds.add(id);
       });
 
-      await new Promise((res) => setTimeout(res, 800));
+      await wait(800);
 
       set((state) => {
         state.todos = state.todos.filter((todo) => todo.id !== id);

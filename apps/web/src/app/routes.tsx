@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Route, Routes } from "react-router";
 import HomeLayout from "@web/layouts/home";
 import AboutPage from "@web/pages/about";

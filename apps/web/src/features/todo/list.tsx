@@ -1,7 +1,6 @@
-import React from "react";
 import { useTodoStore } from "@web/features/todo/use-todo-store";
 
-export const TodoList: React.FC = () => {
+export function TodoList() {
   const { todos, loadingIds, removeTodo } = useTodoStore();
 
   return (
@@ -13,6 +12,7 @@ export const TodoList: React.FC = () => {
             className="text-red-500 disabled:text-gray-300"
             disabled={loadingIds.has(todo.id)}
             onClick={() => removeTodo(todo.id)}
+            type="button"
           >
             {loadingIds.has(todo.id) ? "Deleting..." : "Delete"}
           </button>
@@ -20,4 +20,4 @@ export const TodoList: React.FC = () => {
       ))}
     </ul>
   );
-};
+}

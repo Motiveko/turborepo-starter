@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTodoStore } from "@web/features/todo/use-todo-store";
 
-export const TodoInput: React.FC = () => {
+export function TodoInput() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const addTodo = useTodoStore((state) => state.addTodo);
@@ -21,7 +21,9 @@ export const TodoInput: React.FC = () => {
       <input
         className="border p-2 rounded"
         disabled={loading}
-        onChange={(e) => { setText(e.target.value); }}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
         placeholder="Enter todo"
         value={text}
       />
@@ -34,4 +36,4 @@ export const TodoInput: React.FC = () => {
       </button>
     </form>
   );
-};
+}
