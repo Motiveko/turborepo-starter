@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useStore } from "@web/stores/root-store";
+import { addToast } from "@web/features/toast/toast-service";
 
 export function TodoInput() {
   const [text, setText] = useState("");
@@ -9,11 +10,25 @@ export function TodoInput() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
-
     setLoading(true);
-    await addTodo(text);
-    setText("");
-    setLoading(false);
+    try {
+      if (text === "123") throw new Error("zz");
+      await addTodo(text);
+      addToast({ message: "todo 추가를 완료했습니다.", type: "success" });
+      setText("");
+    } catch (error) {
+      addToast({
+        title: "❌ oops!",
+        message: "todo 추가를 실패했습니다.",
+        type: "error",
+        action: {
+          label: "retry",
+          onClick: () => handleSubmit(e),
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

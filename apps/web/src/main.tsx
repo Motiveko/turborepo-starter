@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router";
 import "@web/index.css";
 import AppRoutes from "@web/app/routes";
 import { initialize } from "@web/init";
+import { ToastContainer } from "react-toastify";
 
 const el = document.getElementById("root");
 if (el) {
@@ -13,6 +14,7 @@ if (el) {
     <React.StrictMode>
       <BrowserRouter>
         <AppRoutes />
+        <ToastContainer stacked={true} draggable={true} />
       </BrowserRouter>
     </React.StrictMode>
   );
