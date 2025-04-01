@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useTodoStore } from "@web/features/todo/use-todo-store";
+import { useStore } from "@web/stores/root-store";
 
 export function TodoInput() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const addTodo = useTodoStore((state) => state.addTodo);
+  const addTodo = useStore((state) => state.todo.add);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

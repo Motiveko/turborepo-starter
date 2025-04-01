@@ -1,17 +1,17 @@
-import { useTodoStore } from "@web/features/todo/use-todo-store";
+import { useStore } from "@web/stores/root-store";
 
 export function TodoList() {
-  const { todos, loadingIds, removeTodo } = useTodoStore();
+  const { list, loadingIds, remove } = useStore((state) => state.todo);
 
   return (
     <ul>
-      {todos.map((todo) => (
+      {list.map((todo) => (
         <li className="flex items-center gap-2" key={todo.id}>
           <span>{todo.text}</span>
           <button
             className="text-red-500 disabled:text-gray-300"
             disabled={loadingIds.has(todo.id)}
-            onClick={() => removeTodo(todo.id)}
+            onClick={() => remove(todo.id)}
             type="button"
           >
             {loadingIds.has(todo.id) ? "Deleting..." : "Delete"}
