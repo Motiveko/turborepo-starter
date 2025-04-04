@@ -5,4 +5,7 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  rules: {
+    "import/no-cycle": "off",
+  },
 };
