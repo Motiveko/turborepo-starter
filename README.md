@@ -21,22 +21,24 @@
   - [x] winston 모듈 추가
   - [x] transporter를 선택 가능하게 변경( options 형태로, file/http/stream 추가필요, )
 
-- [ ] lint 미동작하는거 확인 및 반영
+- [x] lint 미동작하는거 확인 및 반영
 - [ ] 공통 모듈 분리
   - api도 웹도 모두 msa로 쪼개질 수있음
   - api에서 공통으로 쓸 decorator나 middlewares 같은거는 모듈분리가 필요하다. ( 이건 추후 )
 
 ### web
 
-- [ ] 기본 라우팅 세팅
-  - layout, page 분리
-  - not found
-  - 인증
+- [x] oauth 세팅
+- [x] 기본 라우팅 세팅
+  - [x]layout, page 분리
+  - [x] not found
+  - [ ] 인증
 - [x] 상태관리 추가 (`zustand`)
-- [ ] zustand slice 패턴( 상태 scaling )
-- [ ] react-toastify 추가
+- [x] zustand slice 패턴( 상태 scaling )
+- [x] react-toastify 추가
   - 구현 참고해서 할 수 있으면 직접하는것도 좋아보임
 - [x] tailwindcss 추가
+- [ ] dark / light 테마
 - [ ] api client 추가
 
 - [ ] design pattern 기반 재사용 컴포넌트
@@ -59,3 +61,7 @@
 ### notification
 
 - [ ] discord notification
+
+### ui
+
+- [ ] tsup 기반으로 변경 및 ui 컴포넌트 추가
