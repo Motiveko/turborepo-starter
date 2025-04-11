@@ -8,6 +8,13 @@ import baseController from "@api/controllers/base";
 import { errorMiddleware } from "@api/middlewares/error";
 import logger from "@api/lib/logger";
 import { loggerMiddleware } from "@api/middlewares/logger";
+import authController from "@api/controllers/auth";
+import {
+  googleCallbackAuthenticate,
+  passportMiddleware,
+  passportSession,
+} from "@api/middlewares/passport";
+import { sessionMiddleware } from "@api/middlewares/session";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -41,9 +48,15 @@ class App {
     apiRouter.put("/v1/base/:id", baseController.put.bind(this));
     apiRouter.delete("/v1/base/:id", baseController.delete.bind(this));
 
-    this.express.get("/healthz", (req, res) => res.send(200));
+    apiRouter.get("/v1/auth/google", googleCallbackAuthenticate);
+    apiRouter.get(
+      "/v1/auth/google/callback",
+      googleCallbackAuthenticate,
+      authController.googleCallback.bind(this)
+    );
+    apiRouter.post("/v1/auth/logout", authController.logout.bind(this));
 
-    // base router
+    this.express.get("/healthz", (req, res) => res.send(200));
     this.express
       .disable("x-powered-by")
       .use(loggerMiddleware)
@@ -52,6 +65,9 @@ class App {
       .use(helmet())
       .use(cors())
       .use(morgan("dev"))
+      .use(sessionMiddleware)
+      .use(passportMiddleware)
+      .use(passportSession)
       .use("/api", apiRouter)
       .use(errorMiddleware);
   }
@@ -70,7 +86,7 @@ class App {
   async cleanup() {
     if (this.server) {
       await new Promise<void>((resolve, reject) => {
-        this.server!.close((err?: Error) => {
+        this.server?.close((err?: Error) => {
           err ? reject(err) : resolve();
         });
       });

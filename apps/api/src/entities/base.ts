@@ -5,7 +5,6 @@ import {
   Index,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { PatchBaseDto } from "@api/dtos/base";
 
 @Entity({ name: "Base" })
 export class BaseEntity {

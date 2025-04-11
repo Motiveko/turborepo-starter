@@ -2,6 +2,8 @@ import { DataSource } from "typeorm";
 import * as _ from "lodash";
 import { BaseEntity } from "@api/entities/base";
 import { Config } from "@api/config/env";
+import { User } from "@api/entities/user";
+import { AuthProvider } from "@api/entities/auth-provider";
 
 let datasource: DataSource;
 export const getDatasource = () => {
@@ -16,7 +18,7 @@ export const getDatasource = () => {
       schema: Config.TYPEORM_SCHEMA,
       port: _.toNumber(Config.TYPEORM_PORT),
       // entities: ["dist/entities/*.js"],
-      entities: [BaseEntity],
+      entities: [BaseEntity, User, AuthProvider],
       migrations: ["dist/migrations/**/*.js"],
       logging: ["error"],
       synchronize: Boolean(Config.TYPEORM_SYNCHRONIZE),
