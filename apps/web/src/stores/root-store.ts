@@ -1,10 +1,11 @@
 import { create, StateCreator } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { TodoSlice } from "@web/features/todo/slice";
-import { createTodoSlice } from "@web/features/todo/slice";
+import { createTodoSlice, TodoSlice } from "@web/features/todo/slice";
+import { createThemeSlice, ThemeSlice } from "@web/features/theme/slice";
 
 export type RootSlice = {
   todo: TodoSlice;
+  theme: ThemeSlice;
 };
 
 export type SliceCreator<T> = StateCreator<
@@ -17,5 +18,6 @@ export type SliceCreator<T> = StateCreator<
 export const useStore = create<RootSlice>()(
   immer((...args) => ({
     todo: createTodoSlice(...args),
+    theme: createThemeSlice(...args),
   }))
 );
