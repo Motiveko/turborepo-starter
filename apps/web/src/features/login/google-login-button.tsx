@@ -1,3 +1,4 @@
+import { Button } from "@web/components/ui/button";
 import { Config } from "@web/config/env";
 
 // TODO : ui 패키지에서 구현
@@ -6,15 +7,7 @@ function GoogleLoginButton() {
     window.location.href = `${Config.API_URL}/api/v1/auth/google`;
   };
 
-  return (
-    <button
-      className="bg-blue-500 text-white p-2 rounded"
-      onClick={handleLogin}
-      type="button"
-    >
-      Google Login
-    </button>
-  );
+  return <Button onClick={handleLogin}>Google Login</Button>;
 }
 
 export default GoogleLoginButton;
