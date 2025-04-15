@@ -11,6 +11,7 @@ import { loggerMiddleware } from "@api/middlewares/logger";
 import authController from "@api/controllers/auth";
 import {
   googleCallbackAuthenticate,
+  googleLoginHandler,
   passportMiddleware,
   passportSession,
 } from "@api/middlewares/passport";
@@ -48,7 +49,7 @@ class App {
     apiRouter.put("/v1/base/:id", baseController.put.bind(this));
     apiRouter.delete("/v1/base/:id", baseController.delete.bind(this));
 
-    apiRouter.get("/v1/auth/google", googleCallbackAuthenticate);
+    apiRouter.get("/v1/auth/google", googleLoginHandler);
     apiRouter.get(
       "/v1/auth/google/callback",
       googleCallbackAuthenticate,
