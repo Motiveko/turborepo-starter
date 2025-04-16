@@ -1,7 +1,6 @@
 import { json, urlencoded } from "body-parser";
 import express, { Router, type Express } from "express";
 import morgan from "morgan";
-import cors from "cors";
 import helmet from "helmet";
 import type { DataSource } from "typeorm";
 import baseController from "@api/controllers/base";
@@ -17,6 +16,9 @@ import {
 } from "@api/middlewares/passport";
 import { sessionMiddleware } from "@api/middlewares/session";
 import { corsMiddleware } from "@api/middlewares/cors";
+import userController from "@api/controllers/user";
+import { ensureAuthenticated } from "@api/middlewares/auth";
+import type { PrivateRoute } from "@api/types/express";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -40,23 +42,31 @@ class App {
   }
 
   mountRouter() {
-    const apiRouter = Router();
-    apiRouter.get("/v1/base/status", baseController.getStatus.bind(this));
-    apiRouter.get("/v1/base/version", baseController.getVersion.bind(this));
-    apiRouter.get("/v1/base/list", baseController.list.bind(this));
-    apiRouter.get("/v1/base/:id", baseController.get.bind(this));
-    apiRouter.post("/v1/base", baseController.create.bind(this));
-    apiRouter.patch("/v1/base/:id", baseController.patch.bind(this));
-    apiRouter.put("/v1/base/:id", baseController.put.bind(this));
-    apiRouter.delete("/v1/base/:id", baseController.delete.bind(this));
-
-    apiRouter.get("/v1/auth/google", googleLoginHandler);
-    apiRouter.get(
+    const publicRoute = Router();
+    publicRoute.get("/v1/base/status", baseController.getStatus.bind(this));
+    publicRoute.get("/v1/base/version", baseController.getVersion.bind(this));
+    publicRoute.get("/v1/base/list", baseController.list.bind(this));
+    publicRoute.get("/v1/base/:id", baseController.get.bind(this));
+    publicRoute.post("/v1/base", baseController.create.bind(this));
+    publicRoute.patch("/v1/base/:id", baseController.patch.bind(this));
+    publicRoute.put("/v1/base/:id", baseController.put.bind(this));
+    publicRoute.delete("/v1/base/:id", baseController.delete.bind(this));
+    publicRoute.get("/v1/auth/google", googleLoginHandler);
+    publicRoute.get(
       "/v1/auth/google/callback",
       googleCallbackAuthenticate,
       authController.googleCallback.bind(this)
     );
-    apiRouter.post("/v1/auth/logout", authController.logout.bind(this));
+    publicRoute.post("/v1/auth/logout", authController.logout.bind(this));
+
+    const privateRoute = Router() as PrivateRoute;
+    privateRoute.get("/v1/user", userController.get.bind(this));
+    privateRoute.get("/v1/user", (req) => {
+      if (req.isAuthenticated()) {
+        req.user;
+      }
+      userController.get.bind(this);
+    });
 
     this.express.get("/healthz", (req, res) => res.send(200));
     this.express
@@ -70,7 +80,9 @@ class App {
       .use(sessionMiddleware)
       .use(passportMiddleware)
       .use(passportSession)
-      .use("/api", apiRouter)
+      .use("/api", publicRoute)
+      .use(ensureAuthenticated)
+      .use("/api", privateRoute)
       .use(errorMiddleware);
   }
 
