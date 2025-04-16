@@ -10,7 +10,7 @@ class AuthController {
 
   logout(req: TypedRequest, res: TypedResponse) {
     req.logout(() => {
-      res.redirect(Config.FRONTEND_URL);
+      res.send({ message: "ok" });
     });
   }
 }
