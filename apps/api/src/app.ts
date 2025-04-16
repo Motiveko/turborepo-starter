@@ -42,32 +42,6 @@ class App {
   }
 
   mountRouter() {
-    const publicRoute = Router();
-    publicRoute.get("/v1/base/status", baseController.getStatus.bind(this));
-    publicRoute.get("/v1/base/version", baseController.getVersion.bind(this));
-    publicRoute.get("/v1/base/list", baseController.list.bind(this));
-    publicRoute.get("/v1/base/:id", baseController.get.bind(this));
-    publicRoute.post("/v1/base", baseController.create.bind(this));
-    publicRoute.patch("/v1/base/:id", baseController.patch.bind(this));
-    publicRoute.put("/v1/base/:id", baseController.put.bind(this));
-    publicRoute.delete("/v1/base/:id", baseController.delete.bind(this));
-    publicRoute.get("/v1/auth/google", googleLoginHandler);
-    publicRoute.get(
-      "/v1/auth/google/callback",
-      googleCallbackAuthenticate,
-      authController.googleCallback.bind(this)
-    );
-    publicRoute.post("/v1/auth/logout", authController.logout.bind(this));
-
-    const privateRoute = Router() as PrivateRoute;
-    privateRoute.get("/v1/user", userController.get.bind(this));
-    privateRoute.get("/v1/user", (req) => {
-      if (req.isAuthenticated()) {
-        req.user;
-      }
-      userController.get.bind(this);
-    });
-
     this.express.get("/healthz", (req, res) => res.send(200));
     this.express
       .disable("x-powered-by")
@@ -80,9 +54,9 @@ class App {
       .use(sessionMiddleware)
       .use(passportMiddleware)
       .use(passportSession)
-      .use("/api", publicRoute)
+      .use("/api", this.mountPublicRoutes())
       .use(ensureAuthenticated)
-      .use("/api", privateRoute)
+      .use("/api", this.mountPrivateRoutes())
       .use(errorMiddleware);
   }
 
@@ -108,6 +82,33 @@ class App {
     if (this.dataSource.isInitialized) {
       await this.dataSource.destroy();
     }
+  }
+
+  private mountPublicRoutes() {
+    const publicRoute = Router();
+    publicRoute.get("/v1/base/status", baseController.getStatus.bind(this));
+    publicRoute.get("/v1/base/version", baseController.getVersion.bind(this));
+    publicRoute.get("/v1/base/list", baseController.list.bind(this));
+    publicRoute.get("/v1/base/:id", baseController.get.bind(this));
+    publicRoute.post("/v1/base", baseController.create.bind(this));
+    publicRoute.patch("/v1/base/:id", baseController.patch.bind(this));
+    publicRoute.put("/v1/base/:id", baseController.put.bind(this));
+    publicRoute.delete("/v1/base/:id", baseController.delete.bind(this));
+    publicRoute.get("/v1/auth/google", googleLoginHandler);
+    publicRoute.get(
+      "/v1/auth/google/callback",
+      googleCallbackAuthenticate,
+      authController.googleCallback.bind(this)
+    );
+    publicRoute.post("/v1/auth/logout", authController.logout.bind(this));
+
+    return publicRoute;
+  }
+
+  private mountPrivateRoutes() {
+    const privateRoute = Router() as PrivateRoute;
+    privateRoute.get("/v1/user", userController.get.bind(this));
+    return privateRoute;
   }
 }
 
