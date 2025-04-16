@@ -16,6 +16,7 @@ import {
   passportSession,
 } from "@api/middlewares/passport";
 import { sessionMiddleware } from "@api/middlewares/session";
+import { corsMiddleware } from "@api/middlewares/cors";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -64,7 +65,7 @@ class App {
       .use(urlencoded({ extended: true }))
       .use(json())
       .use(helmet())
-      .use(cors())
+      .use(corsMiddleware)
       .use(morgan("dev"))
       .use(sessionMiddleware)
       .use(passportMiddleware)
