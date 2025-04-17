@@ -1,12 +1,12 @@
 import * as dotenv from "dotenv";
 
 const env = process.env.NODE_ENV || "development";
+
 if (env === "test") {
   // 테스트 환경에서는 개발환경변수를 확장해서 사용
   dotenv.config({ path: ".env.development" });
 }
-
-dotenv.config({ path: `.env.${env}` });
+dotenv.config({ path: `.env.${env}`, override: true });
 
 function getEnvVariable(key: string, required?: true): string;
 function getEnvVariable(key: string, required?: false): string | undefined;
@@ -39,4 +39,7 @@ export const Config = {
   JWT_SECRET: getEnvVariable("JWT_SECRET"),
   SESSION_SECRET: getEnvVariable("SESSION_SECRET"),
   FRONTEND_URL: getEnvVariable("FRONTEND_URL"),
+  NODE_ENV: getEnvVariable("NODE_ENV"),
+  isTest: env === "test",
+  isDevelopment: env === "development",
 };
