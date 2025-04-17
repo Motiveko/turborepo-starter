@@ -3,12 +3,7 @@ import {
   ValidateParams,
 } from "@api/decorators/request-validator";
 import type { BaseResponseDto } from "@api/dtos/base";
-import {
-  BaseIdDto,
-  CreateBaseDto,
-  PatchBaseDto,
-  PutBaseDto,
-} from "@api/dtos/base";
+import { CreateBaseDto, PatchBaseDto, PutBaseDto } from "@api/dtos/base";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- TODO: fix
 import type {
   RequestWithBody,
@@ -20,6 +15,7 @@ import type {
 } from "@api/types/express";
 import baseService from "@api/services/base";
 import { Controller } from "@api/decorators/controller";
+import { IdDto } from "@api/dtos/common";
 import packageJson from "../../package.json";
 
 interface VersionResponse {
@@ -36,9 +32,9 @@ class BaseController {
     res.json({ message: "ok", data });
   }
 
-  @ValidateParams(BaseIdDto)
+  @ValidateParams(IdDto)
   async get(
-    req: RequestWithParams<BaseIdDto>,
+    req: RequestWithParams<IdDto>,
     res: TypedResponse<DataAndMessageResponse<BaseResponseDto | null>>
   ) {
     const id = req.params.id;
@@ -57,9 +53,9 @@ class BaseController {
   }
 
   @ValidateBody(PatchBaseDto)
-  @ValidateParams(BaseIdDto)
+  @ValidateParams(IdDto)
   async patch(
-    req: TypedRequest<PatchBaseDto, BaseIdDto>,
+    req: TypedRequest<PatchBaseDto, IdDto>,
     res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>
   ) {
     const data = await baseService.patch(req.params.id, req.body);
@@ -67,17 +63,17 @@ class BaseController {
   }
 
   @ValidateBody(PutBaseDto)
-  @ValidateParams(BaseIdDto)
+  @ValidateParams(IdDto)
   async put(
-    req: TypedRequest<PutBaseDto, BaseIdDto>,
+    req: TypedRequest<PutBaseDto, IdDto>,
     res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>
   ) {
     const data = await baseService.put(req.params.id, req.body);
     res.json({ message: "ok", data });
   }
 
-  @ValidateParams(BaseIdDto)
-  async delete(req: RequestWithParams<BaseIdDto>, res: TypedResponse) {
+  @ValidateParams(IdDto)
+  async delete(req: RequestWithParams<IdDto>, res: TypedResponse) {
     await baseService.remove(req.params.id);
     res.json({ message: "ok" });
   }
