@@ -4,7 +4,6 @@ import {
 } from "@api/decorators/request-validator";
 import type { BaseResponseDto } from "@api/dtos/base";
 import { CreateBaseDto, PatchBaseDto, PutBaseDto } from "@api/dtos/base";
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- TODO: fix
 import type {
   RequestWithBody,
   RequestWithParams,

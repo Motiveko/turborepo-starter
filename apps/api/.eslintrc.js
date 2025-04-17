@@ -7,5 +7,6 @@ module.exports = {
   },
   rules: {
     "import/no-cycle": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
   },
 };
