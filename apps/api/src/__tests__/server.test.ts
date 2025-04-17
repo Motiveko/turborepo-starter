@@ -9,7 +9,9 @@ describe("Server", () => {
   let created: BaseResponseDto;
   beforeAll(async () => {
     app = new App({ dataSource: getDatasource(), port: 3000 });
-    await app.initDatasource().then(() => { app.mountRouter(); });
+    await app.initDatasource().then(() => {
+      app.mountRouter();
+    });
   });
 
   afterAll(async () => {
@@ -64,7 +66,9 @@ describe("Server", () => {
     await supertest(app.getExpress())
       .get(`/api/v1/base/${created.id}`)
       .expect(200)
-      .then((res) => { expect(res.body.data).toEqual(created); });
+      .then((res) => {
+        expect(res.body.data).toEqual(created);
+      });
   });
 
   it("base patch - 404", async () => {
@@ -98,7 +102,7 @@ describe("Server", () => {
 
   it("base put - 200", async () => {
     const base = (await supertest(app.getExpress()).get("/api/v1/base/list"))
-      .body.data[1];
+      .body.data[0];
 
     const newBase = {
       name: "abc",
