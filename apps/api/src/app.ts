@@ -19,6 +19,7 @@ import { corsMiddleware } from "@api/middlewares/cors";
 import userController from "@api/controllers/user";
 import { ensureAuthenticated } from "@api/middlewares/auth";
 import type { PrivateRoute } from "@api/types/express";
+import todoController from "@api/controllers/todo";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -108,6 +109,12 @@ class App {
   private mountPrivateRoutes() {
     const privateRoute = Router() as PrivateRoute;
     privateRoute.get("/v1/user", userController.get.bind(this));
+
+    privateRoute.get("/v1/todo", todoController.list.bind(this));
+    privateRoute.post("/v1/todo", todoController.create.bind(this));
+    privateRoute.patch("/v1/todo/:id", todoController.patch.bind(this));
+    privateRoute.delete("/v1/todo/:id", todoController.delete.bind(this));
+
     return privateRoute;
   }
 }

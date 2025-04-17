@@ -25,6 +25,13 @@ export interface TypedRequest<T = unknown, V extends Record<string, any> = any>
   params: V;
 }
 
+export type RequestWithBody<T> = TypedRequest<T>;
+
+export type RequestWithParams<T extends Record<string, any>> = TypedRequest<
+  unknown,
+  T
+>;
+
 export interface AuthenticatedTypedRequest<
   T = unknown,
   V extends Record<string, any> = any,
@@ -32,12 +39,8 @@ export interface AuthenticatedTypedRequest<
   user: CustomUser;
 }
 
-export type RequestWithBody<T> = TypedRequest<T>;
-
-export type RequestWithParams<T extends Record<string, any>> = TypedRequest<
-  unknown,
-  T
->;
+export interface AuthenticatedRequestWithParams<T extends Record<string, any>>
+  extends AuthenticatedTypedRequest<unknown, T> {}
 
 export type TypedResponse<T = DefaultResponse> = Response<T>;
 

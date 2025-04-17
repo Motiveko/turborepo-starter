@@ -7,8 +7,8 @@ import {
   OneToMany,
   Index, // Index 추가
 } from "typeorm";
-import { AuthProvider } from "./auth-provider";
-
+import { AuthProvider } from "@api/entities/auth-provider";
+import { Todo } from "@api/entities/todo";
 // 애플리케이션의 사용자 계정 엔티티
 @Entity("User")
 export class User {
@@ -37,6 +37,12 @@ export class User {
     cascade: true, // User 저장 시 연결된 AuthProvider도 함께 저장/업데이트
   })
   authProviders: AuthProvider[];
+
+  @OneToMany(() => Todo, (todo) => todo.user, {
+    eager: false,
+    cascade: true,
+  })
+  todos: Todo[];
 
   patch(dto: Partial<Pick<typeof this, "displayName" | "avatarUrl">>) {
     Object.assign(this, dto);
