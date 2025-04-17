@@ -58,7 +58,8 @@ class App {
       .use(passportSession)
       .use("/api", this.mountPublicRoutes())
       .use("/api", this.mountTestRoutes())
-      .use("/api", ensureAuthenticated, this.mountPrivateRoutes())
+      .use(ensureAuthenticated)
+      .use("/api", this.mountPrivateRoutes())
       .use(errorMiddleware);
   }
 
@@ -112,15 +113,20 @@ class App {
     privateRoute.get("/v1/user", userController.get.bind(this));
 
     privateRoute.get("/v1/todo", todoController.list.bind(this));
+    privateRoute.get("/v1/todo/:id", todoController.get.bind(this));
     privateRoute.post("/v1/todo", todoController.create.bind(this));
     privateRoute.patch("/v1/todo/:id", todoController.patch.bind(this));
     privateRoute.delete("/v1/todo/:id", todoController.delete.bind(this));
-
+    privateRoute.post(
+      "/v1/todo/:id/toggle",
+      todoController.toggleDone.bind(this)
+    );
     return privateRoute;
   }
 
   private mountTestRoutes() {
-    const testRoute = Router();
+    // TODO : test router도 public/private 분리가 필요함.
+    const testRoute = Router() as PrivateRoute;
     testRoute.post("/v1/test/login", testController.login.bind(this));
     testRoute.post("/v1/test/logout", testController.logout.bind(this));
 
