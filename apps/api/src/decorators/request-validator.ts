@@ -1,15 +1,16 @@
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import type { Request, Response, NextFunction } from "express";
+import { ValidationError } from "@api/errors/validation";
 
 export function ValidateBody<T extends object>(dtoClass: new () => T) {
-  return function (
+  return function validateBody(
     target: any,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
     const originalMethod = descriptor.value;
-    descriptor.value = async function (
+    descriptor.value = async function RequestHandlerWithValidation(
       req: Request,
       res: Response,
       next: NextFunction
@@ -23,30 +24,32 @@ export function ValidateBody<T extends object>(dtoClass: new () => T) {
         const messages = errors
           .map((err) => Object.values(err.constraints || {}))
           .join(", ");
-        return res.status(400).json({ message: messages });
+
+        throw new ValidationError(messages);
       }
       req.body = dtoObject;
-      // 검증 통과 시 원래 핸들러 실행
+
+      // eslint-disable-next-line -- 타입 검증 통과 후 원래 핸들러 실행
       return originalMethod.apply(this, [req, res, next]);
     };
   };
 }
 
-export function ValidateParams<T extends object>(dtoClass: new () => T) {
-  return function (
+export function ValidateParams<T extends Record<string, any>>(
+  dtoClass: new () => T
+) {
+  return function validateParams(
     target: any,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
     const originalMethod = descriptor.value;
-    descriptor.value = async function (
+    descriptor.value = async function RequestHandlerWithValidation(
       req: Request,
       res: Response,
       next: NextFunction
     ) {
-      // req.params를 dtoClass 인스턴스로 변환
       const dtoObject = plainToInstance(dtoClass, req.params);
-      // 검증 수행
       const errors = await validate(dtoObject, {
         whitelist: true,
         forbidNonWhitelisted: true,
@@ -55,10 +58,12 @@ export function ValidateParams<T extends object>(dtoClass: new () => T) {
         const messages = errors
           .map((err) => Object.values(err.constraints || {}))
           .join(", ");
-        return res.status(400).json({ message: messages });
+        throw new ValidationError(messages);
       }
-      // 검증 통과 시 변환된 dtoObject를 req.params에 재할당
-      req.params = dtoObject as any;
+
+      req.params = dtoObject;
+
+      // eslint-disable-next-line -- 타입 검증 통과 후 원래 핸들러 실행
       return originalMethod.apply(this, [req, res, next]);
     };
   };
