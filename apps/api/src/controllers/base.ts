@@ -7,7 +7,6 @@ import { CreateBaseDto, PatchBaseDto, PutBaseDto } from "@api/dtos/base";
 import type {
   RequestWithBody,
   RequestWithParams,
-  TypedNextFunction,
   TypedRequest,
   TypedResponse,
   DataAndMessageResponse,
@@ -44,8 +43,7 @@ class BaseController {
   @ValidateBody(CreateBaseDto)
   async create(
     req: RequestWithBody<CreateBaseDto>,
-    res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>,
-    next: TypedNextFunction
+    res: TypedResponse<DataAndMessageResponse<BaseResponseDto>>
   ) {
     const result = await baseService.create(req.body);
     res.json({ message: "ok", data: result });
@@ -77,11 +75,11 @@ class BaseController {
     res.json({ message: "ok" });
   }
 
-  async getStatus(req: TypedRequest, res: TypedResponse) {
+  getStatus(req: TypedRequest, res: TypedResponse) {
     res.send({ message: "ok" });
   }
 
-  async getVersion(req: TypedRequest, res: TypedResponse<VersionResponse>) {
+  getVersion(req: TypedRequest, res: TypedResponse<VersionResponse>) {
     res.json({ version: packageJson.version });
   }
 }
