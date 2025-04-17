@@ -39,7 +39,7 @@ export const Config = {
   JWT_SECRET: getEnvVariable("JWT_SECRET"),
   SESSION_SECRET: getEnvVariable("SESSION_SECRET"),
   FRONTEND_URL: getEnvVariable("FRONTEND_URL"),
-  NODE_ENV: getEnvVariable("NODE_ENV"),
+  env,
   isTest: env === "test",
   isDevelopment: env === "development",
 };

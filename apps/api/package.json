@@ -13,7 +13,10 @@
     "test:watch": "NODE_ENV=test jest --detectOpenHandles --watch"
   },
   "jest": {
-    "preset": "@repo/jest-presets/node"
+    "preset": "@repo/jest-presets/node",
+    "testPathIgnorePatterns": [
+      "/test\\.ts$"
+    ]
   },
   "dependencies": {
     "@repo/logger": "workspace:*",
