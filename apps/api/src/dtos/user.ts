@@ -4,7 +4,8 @@ import {
   plainToInstance,
   Transform,
 } from "class-transformer";
-import type { User } from "@api/entities/user";
+import { IsString } from "class-validator";
+import { User } from "@api/entities/user";
 
 export class UserResponseDto {
   @Expose()
@@ -33,5 +34,16 @@ export class UserResponseDto {
 
   toJSON() {
     return instanceToPlain(this);
+  }
+}
+
+export class LoginDto {
+  @IsString()
+  email: string;
+
+  toEntity() {
+    const user = new User();
+    user.email = this.email;
+    return user;
   }
 }

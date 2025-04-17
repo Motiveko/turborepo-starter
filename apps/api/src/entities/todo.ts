@@ -24,7 +24,10 @@ export class Todo {
   @CreateDateColumn({ type: "timestamptz" })
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.todos)
+  @ManyToOne(() => User, (user) => user.todos, {
+    onDelete: "CASCADE", // user 삭제시 todo도 삭제
+    nullable: false,
+  })
   user: User;
 
   patch(dto: Partial<Pick<typeof this, "title" | "description">>) {

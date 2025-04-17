@@ -2,6 +2,7 @@ import type { Profile } from "passport-google-oauth20";
 import { getDatasource } from "@api/datasources";
 import { User } from "@api/entities/user";
 import { GoogleProfileDto } from "@api/dtos/google-profile";
+import { LoginDto } from "@api/dtos/user";
 
 const userRepository = getDatasource().getRepository(User);
 class UserService {
@@ -34,6 +35,14 @@ class UserService {
 
   async getById(id: number) {
     return userRepository.findOne({ where: { id } });
+  }
+
+  async create(user: LoginDto) {
+    return userRepository.save(user.toEntity());
+  }
+
+  async delete(user: User) {
+    return userRepository.remove(user);
   }
 }
 const userService = new UserService();

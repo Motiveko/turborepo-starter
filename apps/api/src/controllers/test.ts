@@ -4,6 +4,7 @@ import { LoginDto, UserResponseDto } from "@api/dtos/user";
 import { IdDto } from "@api/dtos/common";
 import userService from "@api/services/user";
 import type {
+  AuthenticatedRequest,
   DataAndMessageResponse,
   TypedRequest,
   TypedResponse,
@@ -26,8 +27,8 @@ class TestController {
   }
 
   @ValidateBody(IdDto)
-  async logout(req: TypedRequest<IdDto>, res: TypedResponse) {
-    await userService.delete(req.body.id);
+  async logout(req: AuthenticatedRequest<IdDto>, res: TypedResponse) {
+    await userService.delete(req.user);
     req.logout(() => {
       res.json({ message: "ok" });
     });
