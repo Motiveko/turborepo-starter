@@ -20,6 +20,7 @@ import userController from "@api/controllers/user";
 import { ensureAuthenticated } from "@api/middlewares/auth";
 import type { PrivateRoute } from "@api/types/express";
 import todoController from "@api/controllers/todo";
+import testController from "@api/controllers/test";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -56,8 +57,8 @@ class App {
       .use(passportMiddleware)
       .use(passportSession)
       .use("/api", this.mountPublicRoutes())
-      .use(ensureAuthenticated)
-      .use("/api", this.mountPrivateRoutes())
+      .use("/api", this.mountTestRoutes())
+      .use("/api", ensureAuthenticated, this.mountPrivateRoutes())
       .use(errorMiddleware);
   }
 
@@ -116,6 +117,14 @@ class App {
     privateRoute.delete("/v1/todo/:id", todoController.delete.bind(this));
 
     return privateRoute;
+  }
+
+  private mountTestRoutes() {
+    const testRoute = Router();
+    testRoute.post("/v1/test/login", testController.login.bind(this));
+    testRoute.post("/v1/test/logout", testController.logout.bind(this));
+
+    return testRoute;
   }
 }
 
