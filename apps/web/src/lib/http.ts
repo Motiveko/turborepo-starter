@@ -23,6 +23,7 @@ const axiosInstance: AxiosInstance = axios.create({
   timeout: 10000, // 10초 타임아웃
   withCredentials: true,
 });
+
 axiosInstance.interceptors.request.use(
   (config) => config,
   (error) => {
@@ -43,6 +44,31 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// 응답 인터셉터 관리
+const responseInterceptorManager = axiosInstance.interceptors.response;
+
+/**
+ * 응답 에러 인터셉터를 동적으로 추가합니다.
+ * @param onRejected 에러 발생 시 실행될 콜백 함수
+ * @returns 추가된 인터셉터의 ID
+ */
+export const addErrorResponseInterceptor = (
+  onRejected: (error: any) => any
+): number => {
+  return responseInterceptorManager.use(
+    (response) => response, // 성공 콜백은 기본 동작 유지
+    onRejected
+  );
+};
+
+/**
+ * ID를 사용하여 응답 에러 인터셉터를 제거합니다.
+ * @param interceptorId 제거할 인터셉터의 ID
+ */
+export const removeErrorResponseInterceptor = (interceptorId: number): void => {
+  responseInterceptorManager.eject(interceptorId);
+};
 
 /**
  * HTTP 요청 함수 (Zod 스키마로 응답 유효성 검사)
