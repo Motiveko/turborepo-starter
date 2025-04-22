@@ -1,13 +1,14 @@
-import axios, {
+import type {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   AxiosError as AxiosLibError,
 } from "axios";
-import { z, ZodError, ZodTypeAny } from "zod";
+import axios from "axios";
+import type { z, ZodTypeAny } from "zod";
+import type { SetRequired } from "type-fest";
 import { HttpError, ValidationError, NetworkError } from "@web/errors/http";
 import { Config } from "@web/config/env";
-import { SetRequired } from "type-fest";
 
 type RequestConfig = SetRequired<AxiosRequestConfig, "method">;
 type RequestConfigWithSchema<T extends ZodTypeAny> = RequestConfig & {
@@ -91,14 +92,13 @@ async function request<T extends ZodTypeAny>(
       const validationResult = config.schema.safeParse(data);
       if (validationResult.success) {
         return validationResult.data; // Promise<z.infer<T>>
-      } else {
-        throw new ValidationError(
-          "Response validation failed",
-          validationResult.error
-        );
       }
+      throw new ValidationError(
+        "Response validation failed",
+        validationResult.error
+      );
     } else {
-      return; // Promise<void>
+      // Promise<void>
     }
   } catch (error) {
     if (error instanceof ValidationError) {
@@ -146,46 +146,50 @@ async function request<T extends ZodTypeAny>(
 }
 
 interface HttpClient {
-  get<T extends ZodTypeAny>(
+  get: (<T extends ZodTypeAny>(
     url: string,
     config: MethodHttpRequestConfigWithSchema<T>
-  ): Promise<z.infer<T>>;
-  get(url: string, config?: MethodHttpRequestConfig): Promise<void>;
+  ) => Promise<z.infer<T>>) &
+    ((url: string, config?: MethodHttpRequestConfig) => Promise<void>);
 
-  post<T extends ZodTypeAny>(
+  post: (<T extends ZodTypeAny>(
     url: string,
     data: any,
     config: MethodHttpRequestConfigWithSchema<T>
-  ): Promise<z.infer<T>>;
-  post(
-    url: string,
-    data?: any,
-    config?: MethodHttpRequestConfig
-  ): Promise<void>;
+  ) => Promise<z.infer<T>>) &
+    ((
+      url: string,
+      data?: any,
+      config?: MethodHttpRequestConfig
+    ) => Promise<void>);
 
-  put<T extends ZodTypeAny>(
+  put: (<T extends ZodTypeAny>(
     url: string,
     data: any,
     config: MethodHttpRequestConfigWithSchema<T>
-  ): Promise<z.infer<T>>;
-  put(url: string, data?: any, config?: MethodHttpRequestConfig): Promise<void>;
+  ) => Promise<z.infer<T>>) &
+    ((
+      url: string,
+      data?: any,
+      config?: MethodHttpRequestConfig
+    ) => Promise<void>);
 
-  delete<T extends ZodTypeAny>(
+  delete: (<T extends ZodTypeAny>(
     url: string,
     config: MethodHttpRequestConfigWithSchema<T>
-  ): Promise<z.infer<T>>;
-  delete(url: string, config?: MethodHttpRequestConfig): Promise<void>;
+  ) => Promise<z.infer<T>>) &
+    ((url: string, config?: MethodHttpRequestConfig) => Promise<void>);
 
-  patch<T extends ZodTypeAny>(
+  patch: (<T extends ZodTypeAny>(
     url: string,
     data: any,
     config: MethodHttpRequestConfigWithSchema<T>
-  ): Promise<z.infer<T>>;
-  patch(
-    url: string,
-    data?: any,
-    config?: MethodHttpRequestConfig
-  ): Promise<void>;
+  ) => Promise<z.infer<T>>) &
+    ((
+      url: string,
+      data?: any,
+      config?: MethodHttpRequestConfig
+    ) => Promise<void>);
 }
 
 const httpClient: HttpClient = {

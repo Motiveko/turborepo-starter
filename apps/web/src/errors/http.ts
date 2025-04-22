@@ -1,7 +1,7 @@
 // src/errors.ts
 
-import { ZodError } from "zod";
-import { AxiosError } from "axios";
+import type { ZodError } from "zod";
+import type { AxiosError } from "axios";
 
 /**
  * 기본 HTTP 에러 클래스

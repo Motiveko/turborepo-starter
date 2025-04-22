@@ -7,6 +7,9 @@ export function TodoInput() {
   const [loading, setLoading] = useState(false);
   const addTodo = useStore((state) => state.todo.add);
 
+  // TODO : 코드 구조변경
+  // validation은 react-hook-form으로 처리
+  // 로직은 zustand slice or service에서 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;

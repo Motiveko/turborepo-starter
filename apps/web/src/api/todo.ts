@@ -1,7 +1,7 @@
-import { DataAndMessageResponse } from "@web/api/types";
-import { Todo } from "@web/features/todo/slice";
-import httpClient from "@web/lib/http";
 import { z } from "zod";
+import type { DataAndMessageResponse } from "@web/api/types";
+import type { Todo } from "@web/features/todo/slice";
+import httpClient from "@web/lib/http";
 
 const TodoSchema: z.ZodType<Todo> = z.object({
   id: z.number(),

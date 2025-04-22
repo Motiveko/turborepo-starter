@@ -1,4 +1,4 @@
-import GoogleLoginButton from "@web/features/login/google-login-button";
+import GoogleLoginButton from "@web/features/auth/google-login-button";
 
 function LoginPage(): JSX.Element {
   return (

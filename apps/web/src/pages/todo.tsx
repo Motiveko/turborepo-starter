@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import { TodoInput } from "@web/features/todo/input";
 import { TodoList } from "@web/features/todo/list";
 import { useStore } from "@web/stores/root-store";
-import { useEffect } from "react";
 
 function TodoPage() {
   const init = useStore((state) => state.todo.init);

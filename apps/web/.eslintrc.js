@@ -12,10 +12,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "import/no-extraneous-dependencies": "off",
         "react/jsx-no-leaked-render": "off",
-      },
-    },
-    {
-      rules: {
+        "import/no-cycle": "off",
         "no-undef": "off",
       },
     },

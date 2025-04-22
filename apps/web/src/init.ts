@@ -1,19 +1,19 @@
 import { enableMapSet } from "immer";
+import { AxiosError } from "axios";
+import type { NavigateFunction } from "react-router";
 import {
   addErrorResponseInterceptor,
   removeErrorResponseInterceptor,
 } from "@web/lib/http";
 import { addToast } from "@web/features/toast/toast-service";
-import { AxiosError } from "axios";
-import { NavigateFunction } from "react-router";
 
 export const preRenderSetup = () => {
   enableMapSet();
 };
 
-type PostRenderSetupOptions = {
+interface PostRenderSetupOptions {
   navigate: NavigateFunction;
-};
+}
 
 export const postRenderSetup = ({ navigate }: PostRenderSetupOptions) => {
   const interceptorId = addErrorResponseInterceptor(async (error) => {

@@ -1,4 +1,4 @@
-import { SliceCreator } from "@web/stores/root-store";
+import type { SliceCreator } from "@web/stores/root-store";
 
 export type Theme = "light" | "dark";
 export interface ThemeSlice {

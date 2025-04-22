@@ -3,7 +3,7 @@ import Toast from "@web/features/toast/toast";
 
 const DEFAULT_DURATION = 3000;
 
-export type AddToastOptions = {
+export interface AddToastOptions {
   title?: string;
   message: string;
   type: "success" | "error" | "warning" | "info";
@@ -19,7 +19,7 @@ export type AddToastOptions = {
     | "bottom-left"
     | "bottom-right"
     | "bottom-center";
-};
+}
 
 const addToast = ({
   title,
@@ -32,16 +32,16 @@ const addToast = ({
   toast(
     ({ closeToast }) => (
       <Toast
-        closeToast={closeToast}
-        title={title}
-        message={message}
-        type={type}
         action={action}
+        closeToast={closeToast}
+        message={message}
+        title={title}
+        type={type}
       />
     ),
     {
       autoClose: duration || false,
-      position: position,
+      position,
       hideProgressBar: true,
       closeButton: true,
     }

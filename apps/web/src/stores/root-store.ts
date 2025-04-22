@@ -1,12 +1,15 @@
-import { create, StateCreator } from "zustand";
+import type { StateCreator } from "zustand";
+import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { createTodoSlice, TodoSlice } from "@web/features/todo/slice";
-import { createThemeSlice, ThemeSlice } from "@web/features/theme/slice";
+import type { TodoSlice } from "@web/features/todo/slice";
+import { createTodoSlice } from "@web/features/todo/slice";
+import type { ThemeSlice } from "@web/features/theme/slice";
+import { createThemeSlice } from "@web/features/theme/slice";
 
-export type RootSlice = {
+export interface RootSlice {
   todo: TodoSlice;
   theme: ThemeSlice;
-};
+}
 
 export type SliceCreator<T> = StateCreator<
   RootSlice,

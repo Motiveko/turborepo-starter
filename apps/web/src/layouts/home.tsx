@@ -1,7 +1,7 @@
-import { API } from "@web/api";
-import { Button } from "@web/components/ui/button";
 import type { ReactNode } from "react";
 import { Link, Outlet } from "react-router";
+import { API } from "@web/api";
+import { Button } from "@web/components/ui/button";
 
 interface HomeLayoutProps {
   children?: ReactNode;

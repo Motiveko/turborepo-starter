@@ -1,4 +1,4 @@
-type ToastProps = {
+interface ToastProps {
   closeToast: any;
   title?: string;
   message: string;
@@ -7,7 +7,7 @@ type ToastProps = {
     label: string;
     onClick: () => void;
   };
-};
+}
 
 function Toast({ closeToast, title, message, type, action }: ToastProps) {
   const handleClick = () => {
