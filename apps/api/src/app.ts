@@ -21,6 +21,7 @@ import { ensureAuthenticated } from "@api/middlewares/auth";
 import type { PrivateRoute } from "@api/types/express";
 import todoController from "@api/controllers/todo";
 import testController from "@api/controllers/test";
+import { notFoundMiddleware } from "@api/middlewares/not-found";
 
 interface AppOptions {
   dataSource: DataSource;
@@ -58,8 +59,8 @@ class App {
       .use(passportSession)
       .use("/api", this.mountPublicRoutes())
       .use("/api", this.mountTestRoutes())
-      .use(ensureAuthenticated)
-      .use("/api", this.mountPrivateRoutes())
+      .use("/api", ensureAuthenticated, this.mountPrivateRoutes())
+      .use(notFoundMiddleware)
       .use(errorMiddleware);
   }
 
