@@ -8,8 +8,13 @@ import {
 } from "class-validator";
 import { plainToInstance } from "class-transformer";
 import { Todo } from "@api/entities/todo";
+import {
+  CreateTodoDto as CreateTodoDtoInterface,
+  PatchTodoDto as PatchTodoDtoInterface,
+  TodoResponseDto as TodoResponseDtoInterface,
+} from "@repo/interfaces";
 
-export class CreateTodoDto {
+export class CreateTodoDto implements CreateTodoDtoInterface {
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -29,7 +34,7 @@ export class CreateTodoDto {
   }
 }
 
-export class TodoResponseDto {
+export class TodoResponseDto implements TodoResponseDtoInterface {
   @IsNumber()
   @IsNotEmpty()
   id: number;
@@ -56,7 +61,7 @@ export class TodoResponseDto {
   }
 }
 
-export class PatchTodoDto {
+export class PatchTodoDto implements PatchTodoDtoInterface {
   @IsString()
   @IsOptional()
   title?: string;

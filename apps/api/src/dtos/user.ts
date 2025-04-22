@@ -6,13 +6,14 @@ import {
 } from "class-transformer";
 import { IsString } from "class-validator";
 import { User } from "@api/entities/user";
+import { UserResponseDto as UserResponseDtoInterface } from "@repo/interfaces";
 
-export class UserResponseDto {
+export class UserResponseDto implements UserResponseDtoInterface {
   @Expose()
   id: number;
 
   @Expose()
-  name: string;
+  displayName: string;
 
   @Expose()
   email: string;
@@ -21,10 +22,7 @@ export class UserResponseDto {
   avatarUrl: string;
 
   @Expose()
-  @Transform(({ value }) => (value as Date).toISOString().split("T")[0], {
-    toPlainOnly: true,
-  })
-  createdAt: string;
+  createdAt: Date;
 
   static fromEntity(entity: User) {
     return plainToInstance(UserResponseDto, entity, {

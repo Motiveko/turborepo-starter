@@ -6,9 +6,10 @@ import {
   CreateDateColumn,
 } from "typeorm";
 import { User } from "@api/entities/user";
+import { Todo as TodoInterface } from "@repo/interfaces";
 
 @Entity({ name: "Todo" })
-export class Todo {
+export class Todo implements TodoInterface {
   @PrimaryGeneratedColumn()
   id: number;
 
