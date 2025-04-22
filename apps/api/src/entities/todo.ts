@@ -5,8 +5,8 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from "typeorm";
-import { User } from "@api/entities/user";
 import { Todo as TodoInterface } from "@repo/interfaces";
+import { User } from "@api/entities/user";
 
 @Entity({ name: "Todo" })
 export class Todo implements TodoInterface {

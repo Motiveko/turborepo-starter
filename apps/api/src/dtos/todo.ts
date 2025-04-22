@@ -7,12 +7,12 @@ import {
   IsDate,
 } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { Todo } from "@api/entities/todo";
 import {
   CreateTodoDto as CreateTodoDtoInterface,
   PatchTodoDto as PatchTodoDtoInterface,
   TodoResponseDto as TodoResponseDtoInterface,
 } from "@repo/interfaces";
+import { Todo } from "@api/entities/todo";
 
 export class CreateTodoDto implements CreateTodoDtoInterface {
   @IsString()
