@@ -9,6 +9,7 @@ import type { z, ZodTypeAny } from "zod";
 import type { SetRequired } from "type-fest";
 import { HttpError, ValidationError, NetworkError } from "@web/errors/http";
 import { Config } from "@web/config/env";
+import { logger } from "@web/lib/logger";
 
 type RequestConfig = SetRequired<AxiosRequestConfig, "method">;
 type RequestConfigWithSchema<T extends ZodTypeAny> = RequestConfig & {
@@ -93,6 +94,7 @@ async function request<T extends ZodTypeAny>(
       if (validationResult.success) {
         return validationResult.data; // Promise<z.infer<T>>
       }
+      logger.error(validationResult.error);
       throw new ValidationError(
         "Response validation failed",
         validationResult.error
