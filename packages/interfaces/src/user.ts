@@ -3,6 +3,7 @@ export interface User {
   email: string;
   displayName: string;
   avatarUrl: string;
+  createdAt: Date;
 }
 
 export interface CreateUserDto {
@@ -13,12 +14,4 @@ export interface CreateUserDto {
 export interface PatchUserDto {
   displayName?: string;
   avatarUrl?: string;
-}
-
-export interface UserResponseDto {
-  id: number;
-  email: string;
-  displayName: string;
-  avatarUrl: string;
-  createdAt: Date;
 }

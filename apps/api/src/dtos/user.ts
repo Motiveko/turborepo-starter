@@ -1,9 +1,9 @@
 import { Expose, instanceToPlain, plainToInstance } from "class-transformer";
 import { IsString } from "class-validator";
-import { UserResponseDto as UserResponseDtoInterface } from "@repo/interfaces";
+import { User as UserInterface } from "@repo/interfaces";
 import { User } from "@api/entities/user";
 
-export class UserResponseDto implements UserResponseDtoInterface {
+export class UserResponseDto implements UserInterface {
   @Expose()
   id: number;
 
