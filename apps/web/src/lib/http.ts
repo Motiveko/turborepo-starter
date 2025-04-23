@@ -156,25 +156,15 @@ interface HttpClient {
 
   post: (<T extends ZodTypeAny>(
     url: string,
-    data: any,
     config: MethodHttpRequestConfigWithSchema<T>
   ) => Promise<z.infer<T>>) &
-    ((
-      url: string,
-      data?: any,
-      config?: MethodHttpRequestConfig
-    ) => Promise<void>);
+    ((url: string, config?: MethodHttpRequestConfig) => Promise<void>);
 
   put: (<T extends ZodTypeAny>(
     url: string,
-    data: any,
     config: MethodHttpRequestConfigWithSchema<T>
   ) => Promise<z.infer<T>>) &
-    ((
-      url: string,
-      data?: any,
-      config?: MethodHttpRequestConfig
-    ) => Promise<void>);
+    ((url: string, config?: MethodHttpRequestConfig) => Promise<void>);
 
   delete: (<T extends ZodTypeAny>(
     url: string,
@@ -184,14 +174,9 @@ interface HttpClient {
 
   patch: (<T extends ZodTypeAny>(
     url: string,
-    data: any,
     config: MethodHttpRequestConfigWithSchema<T>
   ) => Promise<z.infer<T>>) &
-    ((
-      url: string,
-      data?: any,
-      config?: MethodHttpRequestConfig
-    ) => Promise<void>);
+    ((url: string, config?: MethodHttpRequestConfig) => Promise<void>);
 }
 
 const httpClient: HttpClient = {
