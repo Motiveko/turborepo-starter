@@ -15,11 +15,3 @@ export interface PatchTodoDto {
   title?: string;
   description?: string;
 }
-
-export interface TodoResponseDto {
-  id: number;
-  title: string;
-  description: string;
-  isDone: boolean;
-  createdAt: Date;
-}

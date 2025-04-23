@@ -8,9 +8,9 @@ import {
 } from "class-validator";
 import { plainToInstance } from "class-transformer";
 import {
+  Todo as TodoDtoInterface,
   CreateTodoDto as CreateTodoDtoInterface,
   PatchTodoDto as PatchTodoDtoInterface,
-  TodoResponseDto as TodoResponseDtoInterface,
 } from "@repo/interfaces";
 import { Todo } from "@api/entities/todo";
 
@@ -34,7 +34,7 @@ export class CreateTodoDto implements CreateTodoDtoInterface {
   }
 }
 
-export class TodoResponseDto implements TodoResponseDtoInterface {
+export class TodoResponseDto implements TodoDtoInterface {
   @IsNumber()
   @IsNotEmpty()
   id: number;
