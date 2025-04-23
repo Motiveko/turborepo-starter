@@ -7,7 +7,7 @@ export function TodoList() {
     <ul>
       {list.map((todo) => (
         <li className="flex items-center gap-2" key={todo.id}>
-          <span>{todo.text}</span>
+          <span>{todo.title}</span>
           <button
             className="text-red-500 disabled:text-gray-300"
             disabled={loadingIds.has(todo.id)}

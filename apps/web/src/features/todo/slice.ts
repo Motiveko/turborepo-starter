@@ -1,10 +1,6 @@
+import type { Todo } from "@repo/interfaces";
 import type { SliceCreator } from "@web/stores/root-store";
 import { API } from "@web/api";
-
-export interface Todo {
-  id: number;
-  text: string;
-}
 
 export interface TodoSlice {
   list: Todo[];
@@ -19,8 +15,9 @@ export const createTodoSlice: SliceCreator<TodoSlice> = (set) => ({
   list: [],
   loadingIds: new Set(),
   isLoading: false,
+
   init: async () => {
-    // TODO : set을 한번만 호출하거나 아예 호출 안하는 방식(redux toolkit)으로 변경 가능한지 확인
+    // TODO : set을 추상화해서 사용
     set((state) => {
       state.todo.isLoading = true;
     });
@@ -36,15 +33,13 @@ export const createTodoSlice: SliceCreator<TodoSlice> = (set) => ({
       });
     }
   },
-  add: async (text: string) => {
-    await new Promise((res) => {
-      setTimeout(res, 500);
+  add: async (title: string) => {
+    const todo = await API.todo.create({
+      title,
+      description: "-",
     });
     set((state) => {
-      state.todo.list.push({
-        id: Date.now(),
-        text,
-      });
+      state.todo.list.push(todo);
     });
   },
 
@@ -53,9 +48,7 @@ export const createTodoSlice: SliceCreator<TodoSlice> = (set) => ({
       state.todo.loadingIds.add(id);
     });
 
-    await new Promise((res) => {
-      setTimeout(res, 500);
-    });
+    await API.todo.delete(id);
 
     set((state) => {
       state.todo.list = state.todo.list.filter((todo) => todo.id !== id);
