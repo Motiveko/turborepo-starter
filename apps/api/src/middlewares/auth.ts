@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
+import { UnauthorizedError } from "@api/errors/un-authorized";
 
-export const ensureAuthenticated = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -10,5 +10,5 @@ export const ensureAuthenticated = (
     return;
   }
 
-  res.status(401).json({ message: "Unauthorized: Login required" });
+  next(new UnauthorizedError("Unauthorized: Login required"));
 };
