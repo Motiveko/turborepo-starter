@@ -5,29 +5,24 @@ import { GoogleProfileDto } from "@api/dtos/google-profile";
 import { LoginDto } from "@api/dtos/user";
 
 const userRepository = getDatasource().getRepository(User);
-class UserService {
-  async findOrCreate(profile: Profile) {
-    if (!profile.emails) {
-      throw new Error("이메일이 없습니다."); // 500;
-    }
 
+class UserService {
+  async findOrCreate(profile: GoogleProfileDto) {
     // 1. 이메일로 사용자 조회
     const userFound = await userRepository.findOne({
-      where: { email: profile.emails[0].value },
+      where: { email: profile.email },
     });
 
     if (userFound) {
       // update user
-      const googleProfile = GoogleProfileDto.fromProfile(profile);
-      userFound.patch(googleProfile);
+      userFound.patch(profile);
       await userRepository.save(userFound);
 
       return userFound;
     }
 
     // 2. 사용자가 없으면 생성
-    const googleProfile = GoogleProfileDto.fromProfile(profile);
-    const user = googleProfile.toEntity();
+    const user = profile.toEntity();
     await userRepository.save(user);
 
     return user;
