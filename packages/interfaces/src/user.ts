@@ -15,3 +15,12 @@ export interface PatchUserDto {
   displayName?: string;
   avatarUrl?: string;
 }
+
+export interface TokenDto {
+  token: string;
+}
+
+export interface JwtResponse {
+  accessToken: string;
+  refreshToken?: string;
+}
