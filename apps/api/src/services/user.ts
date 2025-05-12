@@ -1,4 +1,3 @@
-import type { Profile } from "passport-google-oauth20";
 import { getDatasource } from "@api/datasources";
 import { User } from "@api/entities/user";
 import { GoogleProfileDto } from "@api/dtos/google-profile";
