@@ -48,6 +48,9 @@ export class LoginDto {
 export class LoginAppRequestDto implements TokenInterface {
   @IsString()
   token: string;
+
+  @IsString()
+  clientId: string;
 }
 
 export class LoginAppResponseDto implements JwtResponse {
@@ -59,10 +62,19 @@ export class LoginAppResponseDto implements JwtResponse {
 }
 
 export class JwtPayloadDto {
+  @Expose()
   id: number;
+
+  @Expose()
   email: string;
+
+  @Expose()
   displayName: string;
+
+  @Expose()
   avatarUrl: string;
+
+  @Expose()
   createdAt: Date;
 
   static fromEntity(entity: User) {
@@ -71,7 +83,7 @@ export class JwtPayloadDto {
     });
   }
 
-  toJSON() {
+  toJSON(): Record<string, any> {
     return instanceToPlain(this);
   }
 }

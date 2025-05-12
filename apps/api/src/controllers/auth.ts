@@ -26,10 +26,12 @@ class AuthController {
     req: TypedRequest<LoginAppRequestDto>,
     res: TypedResponse<LoginAppResponseDto>
   ) {
-    const { token } = req.body;
+    const { token, clientId } = req.body;
     const ticket = await googleClient.verifyIdToken({
       idToken: token,
-      audience: Config.GOOGLE_CLIENT_ID,
+      // TODO : 클라이언트마다 clientId가 다르기때문에 clientId를 요청측에서 보내도록 함. 클라이언트 타입을 받는게 맞을지는 고민 필요
+      audience: clientId,
+      // audience: Config.GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
     if (!payload) {
@@ -38,7 +40,7 @@ class AuthController {
 
     const googleProfile = GoogleProfileDto.fromTokenPayload(payload);
     const user = await userService.findOrCreate(googleProfile);
-    const jwtToken = createToken(JwtPayloadDto.fromEntity(user));
+    const jwtToken = createToken(JwtPayloadDto.fromEntity(user).toJSON());
     res.status(200).send({ accessToken: jwtToken });
   }
 
