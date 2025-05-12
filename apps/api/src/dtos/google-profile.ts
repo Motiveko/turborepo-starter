@@ -1,4 +1,5 @@
 import type { Profile } from "passport-google-oauth20";
+import { TokenPayload } from "google-auth-library";
 import { User } from "@api/entities/user";
 
 export class GoogleProfileDto {
@@ -15,6 +16,17 @@ export class GoogleProfileDto {
     dto.avatarUrl = profile.photos?.[0]?.value;
     dto.displayName = profile.displayName;
 
+    return dto;
+  }
+
+  static fromTokenPayload(payload: TokenPayload): GoogleProfileDto {
+    if (!payload.email) {
+      throw new Error("google payload에 이메일이 없습니다.");
+    }
+    const dto = new GoogleProfileDto();
+    dto.email = payload.email;
+    dto.displayName = payload.name;
+    dto.avatarUrl = payload.picture;
     return dto;
   }
 

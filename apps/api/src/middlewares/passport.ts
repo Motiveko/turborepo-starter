@@ -4,6 +4,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import type { RequestHandler } from "express";
 import { Config } from "@api/config/env";
 import userService from "@api/services/user";
+import { GoogleProfileDto } from "@api/dtos/google-profile";
 
 const configurePassport = () => {
   passport.use(
@@ -17,7 +18,9 @@ const configurePassport = () => {
         try {
           // DB에서 사용자 찾거나 생성
           // TODO : auth provider 정보 저장
-          const user = await userService.findOrCreate(profile);
+          const user = await userService.findOrCreate(
+            GoogleProfileDto.fromProfile(profile)
+          );
           done(null, user);
         } catch (error) {
           done(error);

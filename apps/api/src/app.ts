@@ -104,6 +104,10 @@ class App {
       googleCallbackAuthenticate,
       authController.googleCallback.bind(this)
     );
+    publicRoute.post(
+      "/v1/auth/google/app",
+      authController.googleOAuthApp.bind(this)
+    );
     publicRoute.post("/v1/auth/logout", authController.logout.bind(this));
 
     return publicRoute;
