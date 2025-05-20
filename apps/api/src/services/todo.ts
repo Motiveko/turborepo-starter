@@ -60,6 +60,7 @@ class TodoService {
       where: {
         user: { id: userId },
       },
+      order: { id: "DESC" },
     });
 
     return todos;
