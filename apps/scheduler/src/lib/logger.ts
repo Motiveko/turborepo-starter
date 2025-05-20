@@ -12,6 +12,7 @@ if (Config.APPLICATION_LOG_DIR) {
       datePattern: "YYYY-MM-DD",
       level: "info",
       zippedArchive: true,
+      maxFiles: "3d",
     },
   });
 }
