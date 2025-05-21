@@ -9,6 +9,7 @@ export interface TodoSlice {
   remove: (id: number) => Promise<void>;
   init: () => Promise<void>;
   isLoading: boolean;
+  toggleDone: (id: number, isDone: boolean) => Promise<void>;
 }
 
 export const createTodoSlice: SliceCreator<TodoSlice> = (set) => ({
@@ -54,5 +55,27 @@ export const createTodoSlice: SliceCreator<TodoSlice> = (set) => ({
       state.todo.list = state.todo.list.filter((todo) => todo.id !== id);
       state.todo.loadingIds.delete(id);
     });
+  },
+
+  toggleDone: async (id: number, isDone: boolean) => {
+    set((state) => {
+      state.todo.loadingIds.add(id);
+    });
+    try {
+      const updatedTodo = await API.todo.update(id, { isDone });
+      set((state) => {
+        state.todo.list = state.todo.list.map((todo) =>
+          todo.id === id ? { ...todo, isDone: updatedTodo.isDone } : todo
+        );
+      });
+    } catch (error) {
+      // TODO: Proper error handling, maybe set an error state
+      console.error("Failed to toggle todo:", error);
+      // Optionally, revert the optimistic update or inform the user
+    } finally {
+      set((state) => {
+        state.todo.loadingIds.delete(id);
+      });
+    }
   },
 });

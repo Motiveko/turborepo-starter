@@ -14,4 +14,5 @@ export interface CreateTodoDto {
 export interface PatchTodoDto {
   title?: string;
   description?: string;
+  isDone?: boolean;
 }

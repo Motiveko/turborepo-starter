@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Todo, CreateTodoDto } from "@repo/interfaces";
+import type { Todo, CreateTodoDto, PatchTodoDto } from "@repo/interfaces";
 import type { DataAndMessageResponse } from "@web/api/types";
 import httpClient from "@web/lib/http";
 
@@ -18,6 +18,12 @@ const ListApiResponseSchema: z.ZodType<DataAndMessageResponse<Todo[]>> =
   });
 
 const CreateApiResponseSchema: z.ZodType<DataAndMessageResponse<Todo>> =
+  z.object({
+    data: TodoSchema,
+    message: z.string(),
+  });
+
+const UpdateApiResponseSchema: z.ZodType<DataAndMessageResponse<Todo>> =
   z.object({
     data: TodoSchema,
     message: z.string(),
@@ -50,3 +56,14 @@ const _delete = async (id: number) => {
 
 // delete 예약어 충돌 문제로 사용 불가능해서 별도 export 처리
 export { _delete as delete };
+
+export const update = async (id: number, payload: PatchTodoDto) => {
+  const response = await httpClient.patch<typeof UpdateApiResponseSchema>(
+    `/api/v1/todo/${id}`,
+    {
+      schema: UpdateApiResponseSchema,
+      data: payload,
+    }
+  );
+  return response.data;
+};
