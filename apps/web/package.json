@@ -7,7 +7,7 @@
     "build:client": "vite build",
     "build:server": "tsup",
     "clean": "rm -rf dist",
-    "dev": "vite-node server/dev.ts",
+    "dev": "sleep 3 && vite-node server/dev.ts",
     "start": "node dist/server/index.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ --fix"
